@@ -5,12 +5,12 @@
 #include <array>
 #include <assert.h>
 #include <ios>
-#include <bit> // for clz
 #include <iostream> 
 #include <string>
 
 #if __cplusplus >= 202002L // c++20, MSVC requires /Zc:__cplusplus
 #define FIXED_64_ENABLE_CPP20 1
+#include <bit> // for clz
 #else
 #define FIXED_64_ENABLE_CPP20 0
 #endif
