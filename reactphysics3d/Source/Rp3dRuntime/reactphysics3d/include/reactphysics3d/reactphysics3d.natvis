@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="reactphysics3d::Array&lt;*&gt;">
+    <Intrinsic Name="size" Expression="mSize" />
+    <Intrinsic Name="capacity" Expression="mCapacity" />
+    <DisplayString>Vector{{ size={size()}, capacity={capacity()}}}</DisplayString>
+    <Expand>
+      <ArrayItems>
+        <Size>size()</Size>
+        <ValuePointer>mBuffer</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+
+  <Type Name="reactphysics3d::Map&lt;*&gt;">
+    <Intrinsic Name="size" Expression="mNbEntries" />
+    <Intrinsic Name="capacity" Expression="mNbAllocatedEntries" />
+    <DisplayString>Map{{ size={size()}, capacity={capacity()}}}</DisplayString>
+    <Expand>
+      <ArrayItems>
+        <Size>size()</Size>
+        <ValuePointer>mEntries</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+
+  <Type Name="reactphysics3d::Pair&lt;*&gt;">
+    <DisplayString>Pair{{ {first}, {second} }}</DisplayString>
+  </Type>
+
+</AutoVisualizer>
