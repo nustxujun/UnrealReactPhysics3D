@@ -48,9 +48,9 @@ URp3dCollisionShape* URp3dCollisionShape::CreateConvexShape(const FKConvexElem& 
     return URp3dConvexShape::Create(Convex,Scale);
 }
 
-URp3dCollisionShape* URp3dCollisionShape::CreateConcaveShape(UStaticMesh* Mesh, const FVector& Scale)
+URp3dCollisionShape* URp3dCollisionShape::CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
 {
-    return URp3dConcaveShape::Create(Mesh, Scale);
+    return URp3dConcaveShape::Create(Vertices, Indices, Scale);
 }
 
 URp3dConvexShape* URp3dConvexShape::Create(const FKConvexElem& Convex, const FVector& Scale)
@@ -133,40 +133,34 @@ void URp3dConvexShape::BeginDestroy()
     Mesh.Reset();
 }
 
-URp3dConcaveShape* URp3dConcaveShape::Create(UStaticMesh* Mesh, const FVector& Scale)
+URp3dConcaveShape* URp3dConcaveShape::Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
 {
     using namespace reactphysics3d;
     auto Shape = NewObject<URp3dConcaveShape>(&URp3dSystem::Get());
 
-    auto& MeshData = Mesh->RenderData->LODResources[0];
-    auto& VertexBuffer = MeshData.VertexBuffers.PositionVertexBuffer;
-    auto& IndexBuffer = MeshData.IndexBuffer;
-    
-    check(IndexBuffer.AccessStream16());
-    
-    const auto NumFaces = MeshData.GetNumTriangles();
+    const auto NumFaces = Indices.Num() / 3 ;
 
     TArray<Vector3> VerticesRaw;
-    VerticesRaw.Reserve(VertexBuffer.GetNumVertices() );
-    for (uint32 i = 0; i < VertexBuffer.GetNumVertices(); ++i)
+    VerticesRaw.Reserve(Vertices.Num() );
+    for (int32 i = 0; i < Vertices.Num(); ++i)
     {
-        auto& Vertex = VertexBuffer.VertexPosition(i);
+        auto& Vertex = Vertices[i];
         VerticesRaw.Add(UE_TO_RP3D(Vertex));
     }
 
-    TriangleVertexArray VertexArray(VertexBuffer.GetNumVertices(), VerticesRaw.GetData(), sizeof(Vector3),
+    TriangleVertexArray VertexArray(Vertices.Num(), VerticesRaw.GetData(), sizeof(Vector3),
         NumFaces,
-        IndexBuffer.Is32Bit() ? (const void*)IndexBuffer.AccessStream32() : (const void*)IndexBuffer.AccessStream16(),
-        (IndexBuffer.Is32Bit() ? 4 : 2) * 3,
+        Indices.GetData(),
+        4 * 3,
         TriangleVertexArray::VertexDataType::VERTEX_TYPE_NAME,
-        IndexBuffer.Is32Bit() ? TriangleVertexArray::IndexDataType::INDEX_INTEGER_TYPE : TriangleVertexArray::IndexDataType::INDEX_SHORT_TYPE);
+        TriangleVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
         std::vector<Message> Msgs;
 
     auto TriangleMesh = RP3D_MAKE_SHARED(TriangleMesh, VertexArray, Msgs);
 
     if (!TriangleMesh)
     {
-        UE_LOG(LogPhysics, Error, TEXT("failed to generate convex mesh with %s :"), *Mesh->GetPathName());
+        UE_LOG(LogPhysics, Error, TEXT("failed to generate concave mesh "));
         FString Content;
         for (auto& m : Msgs)
         {

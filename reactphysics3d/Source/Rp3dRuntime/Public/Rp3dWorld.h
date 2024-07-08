@@ -31,9 +31,26 @@ private:
 private:
 	TSharedPtr<reactphysics3d::PhysicsWorld> PhysicsWorld;
 	TWeakObjectPtr<UWorld> World;
-	TArray<TWeakObjectPtr<URp3dRigidBody>> RigidBodies;
+
+	UPROPERTY()
+	TArray<URp3dRigidBody*> RigidBodies;
 
 	FDelegateHandle TickHandle;
 	reactphysics3d::decimal TotalTime = 0;
 };
 
+UCLASS()
+class RP3DRUNTIME_API URp3dWorldSubsystem : public UWorldSubsystem
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
+	URp3dWorld* GetRp3dWorld();
+
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Deinitialize() override;
+	bool ShouldCreateSubsystem(UObject* Outer) const override;
+private:
+	UPROPERTY()
+	URp3dWorld* World;
+};

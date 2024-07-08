@@ -23,11 +23,12 @@ protected:
 
 	FPrimitiveSceneProxy* CreateSceneProxy() override;
 
-
+	void Serialize(FArchive& Ar) override;
+	
 public:
 	void UpdateCollisionShape() override;
 
 private:
-
-
+	TArray<FVector> Vertices;
+	TArray<int32> Indices;
 };

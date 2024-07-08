@@ -20,13 +20,6 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
-	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
-	URp3dWorld* CreateWorld(UWorld* World, const FRp3dWorldSettings& Settings);
-
-	URp3dWorld* GetRp3dWorld(UWorld* World);
-
-	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
-	URp3dWorld* GetRp3dWorld(UObject* Obj);
 
 	reactphysics3d::PhysicsCommon& GetRp3dPhysicsCommon();
 
@@ -37,8 +30,6 @@ private:
 	UPROPERTY()
 	FRp3dWorldSettings WorldSettings;
 
-	UPROPERTY()
-	TArray<URp3dWorld*> Worlds;
 	
 	TMap<UWorld*, URp3dWorld*> WorldMap;
 };

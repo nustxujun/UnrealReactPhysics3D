@@ -14,7 +14,7 @@ public:
 	static URp3dCollisionShape* CreateSphereShape(float Radius);
 	static URp3dCollisionShape* CreateCapsuleShape(float Radius, float HalfHeight);
 	static URp3dCollisionShape* CreateConvexShape(const FKConvexElem& Convex, const FVector& Scale);
-	static URp3dCollisionShape* CreateConcaveShape(UStaticMesh* Mesh, const FVector& Scale);
+	static URp3dCollisionShape* CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
 
 	virtual void BeginDestroy() override;
 
@@ -42,7 +42,7 @@ class RP3DRUNTIME_API URp3dConcaveShape: public URp3dCollisionShape
 {
 	GENERATED_BODY()
 public:
-	static URp3dConcaveShape* Create(UStaticMesh* Mesh, const FVector& Scale);
+	static URp3dConcaveShape* Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
 
 	virtual void BeginDestroy() override;
 private:

@@ -10,7 +10,7 @@
 
 URp3dWorld* URp3dWorld::Get(UWorld* World)
 {
-    auto RWorld = URp3dSystem::Get().GetRp3dWorld(World);
+    auto RWorld = World->GetSubsystem<URp3dWorldSubsystem>()->GetRp3dWorld();
     return RWorld;
 }
 
@@ -112,8 +112,6 @@ void URp3dWorld::BeginDestroy()
 
     for (auto& Body : RigidBodies)
     {
-        if (!Body.IsValid())
-            continue;
         Body->RemoveFromWorld();
     }
     RigidBodies.Reset();
@@ -121,11 +119,37 @@ void URp3dWorld::BeginDestroy()
     if (TickHandle.IsValid())
         FTicker::GetCoreTicker().RemoveTicker(TickHandle);
 
-    auto& PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon();
     PhysicsWorld.Reset();
+
 }
 
 void URp3dWorld::AddRigidBody(URp3dRigidBody* RigidBody)
 {
     RigidBodies.Add(RigidBody);
+}
+
+
+URp3dWorld* URp3dWorldSubsystem::GetRp3dWorld()
+{
+    return World;
+}
+
+bool URp3dWorldSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+{
+    return true;
+}
+
+void URp3dWorldSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+    //Collection.InitializeDependency(URp3dSystem::StaticClass());
+
+    World = NewObject<URp3dWorld>(this);
+    FRp3dWorldSettings Settings;
+    Settings.bAutoUpdate = false;
+    World->Initialize(Settings, GetWorld());
+}
+
+void URp3dWorldSubsystem::Deinitialize()
+{
+    World = nullptr;
 }

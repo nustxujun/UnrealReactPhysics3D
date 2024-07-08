@@ -43,30 +43,6 @@ void URp3dSystem::Deinitialize()
 	PhysicsCommon.Reset();
 }
 
-URp3dWorld* URp3dSystem::CreateWorld(UWorld* World,const FRp3dWorldSettings & Settings)
-{
-	auto RWorld = NewObject<URp3dWorld>(this);
-	Worlds.Add(RWorld);
-	RWorld->Initialize(Settings, World);
-	WorldMap.Add(World, RWorld);
-
-	return RWorld;
-}
-
-URp3dWorld* URp3dSystem::GetRp3dWorld(UWorld* World)
-{
-	return WorldMap.FindRef(World);
-}
-
-URp3dWorld* URp3dSystem::GetRp3dWorld(UObject* Obj)
-{
-	if (!Obj)
-		return nullptr;
-	if (Obj->IsA<UWorld>())
-		return GetRp3dWorld(Cast<UWorld>(Obj));
-	else
-		return GetRp3dWorld(Obj->GetWorld());
-}	
 
 
 reactphysics3d::PhysicsCommon& URp3dSystem::GetRp3dPhysicsCommon()

@@ -35,6 +35,7 @@ void URp3dRigidBodyComponent::OnCreateRp3dState()
 	RigidBody->SetTransform(UE_TO_RP3D(Trans));
 
 	EBodyType Type = EBodyType::STATIC;
+	Mobility = GetOwner()->GetRootComponent()->Mobility;
 	if (Mobility == EComponentMobility::Stationary)
 	{
 		Type = EBodyType::KINEMATIC;
@@ -46,7 +47,7 @@ void URp3dRigidBodyComponent::OnCreateRp3dState()
 
 	SetBodyType(Type);
 
-#if WITH_EDITORONLY_DATA
+#if WITH_EDITOR
 	RigidBody->SetIsDebugEnabled(bEnableDebugDraw);
 #endif
 

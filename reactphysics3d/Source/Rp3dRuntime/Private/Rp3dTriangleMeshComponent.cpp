@@ -60,7 +60,21 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 	}
 	else
 	{
-		AddCollisionShape(URp3dCollisionShape::CreateConcaveShape(Mesh,GetComponentTransform().GetScale3D()), FTransform::Identity);
+#if WITH_EDITOR
+		FTriMeshCollisionData MeshData;
+		Mesh->GetPhysicsTriMeshData(&MeshData, true);
+		Indices.Reset();
+		Indices.Reserve(MeshData.Indices.Num() * 3);
+		for (auto& Face : MeshData.Indices)
+		{
+			Indices.Add(Face.v0);
+			Indices.Add(Face.v1);
+			Indices.Add(Face.v2);
+		}
+		Vertices = MoveTemp(MeshData.Vertices);
+#endif
+		check(Vertices.Num() != 0 && Indices.Num() != 0);
+		AddCollisionShape(URp3dCollisionShape::CreateConcaveShape(Vertices, Indices,GetComponentTransform().GetScale3D()), FTransform::Identity);
 	}
 
 
@@ -97,7 +111,8 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 
 			if (InComponent->bIsConvexMesh )
 			{
-
+				if (!InComponent->Mesh)
+					return;
 				auto& Geoms = InComponent->Mesh->BodySetup->AggGeom;
 
 				for (auto& Box : Geoms.BoxElems)
@@ -167,43 +182,41 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 			}
 			else
 			{
-				// if (!InComponent->PhysicsMesh)
-				// 	return;
-				// auto& Mesh = *InComponent->PhysicsMesh;
-				// Vertices.Reserve(Mesh.getNbVertices());
-				// for (uint32 i = 0; i < Mesh.getNbVertices(); ++i)
-				// {
-				// 	Vertices.Push(RP3D_TO_UE(Mesh.getVertex(i)));
-				// }
+				if (!InComponent->Mesh)
+					return;
+				FTriMeshCollisionData MeshData;
+				InComponent->Mesh->GetPhysicsTriMeshData(&MeshData, true);
 
-				// struct Line
-				// {
-				// 	uint32 a;
-				// 	uint32 b;
-				// };
+				struct Line
+				{
+					int32 a;
+					int32 b;
+				};
 
-				// auto GetKey = [](auto a, auto b){
-				// 	auto Min = FMath::Min(a,b);
-				// 	auto Max = FMath::Max(a,b);
-				// 	return (uint64(a) << 32) | uint64(b);
-				// };
+				auto GetKey = [](auto a, auto b) {
+					auto Min = FMath::Min(a, b);
+					auto Max = FMath::Max(a, b);
+					return (uint64(a) << 32) | uint64(b);
+				};
 
-				// TSortedMap<uint64, Line > Lines;
-				// Lines.Reserve(Mesh.getNbTriangles() * 3);
-				// for (uint32 i = 0; i < Mesh.getNbTriangles(); ++i)
-				// {
-				// 	uint32 i1,i2,i3;
-				// 	Mesh.getTriangleVerticesIndices(i, i1,i2,i3);
-				// 	Lines.Add(GetKey(i1, i2), {i1, i2});
-				// 	Lines.Add(GetKey(i1, i3), { i1, i3 });
-				// 	Lines.Add(GetKey(i2, i3), { i2, i3 });
-				// }
+				TSortedMap<uint64, Line > Lines;
+				Lines.Reserve(MeshData.Indices.Num() * 3);
+				for (int32 i = 0; i < MeshData.Indices.Num(); ++i)
+				{
+					auto& Face = MeshData.Indices[i];
+					Lines.Add(GetKey(Face.v0, Face.v1), { Face.v0, Face.v1 });
+					Lines.Add(GetKey(Face.v0, Face.v2), { Face.v0, Face.v2 });
+					Lines.Add(GetKey(Face.v2, Face.v1), { Face.v2, Face.v1 });
 
-				// for (auto& L : Lines)
-				// {
-				// 	Indices.Add(L.Value.a);
-				// 	Indices.Add(L.Value.b);
-				// }
+				}
+
+				for (auto& L : Lines)
+				{
+					Indices.Add(L.Value.a);
+					Indices.Add(L.Value.b);
+				}
+
+				Vertices = MeshData.Vertices;
 			}
 		}
 
@@ -283,4 +296,26 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 	};
 	UpdateCollisionShape();
 	return new FTriangleMeshSceneProxy(this);
+}
+
+const static FGuid Rp3dTriangleMeshGUID(0x21d23c94, 0xf4a747f3, 0xB4FD92DB,0xBD4CF9F2);
+const static int Rp3dTriangleMeshLatestVersion = 1;
+static FCustomVersionRegistration RegisterRp3dTriangleMeshVersion(Rp3dTriangleMeshGUID, Rp3dTriangleMeshLatestVersion, TEXT("Rp3dTriangleMesh"));
+
+void URp3dTriangleMeshComponent::Serialize(FArchive& Ar)
+{
+	Super::Serialize(Ar);
+	if (bIsConvexMesh || !Mesh)
+		return;
+
+	Ar.UsingCustomVersion(Rp3dTriangleMeshGUID);
+
+	if (Ar.IsLoading() && Ar.CustomVer(Rp3dTriangleMeshGUID) < Rp3dTriangleMeshLatestVersion)
+	{
+		UE_LOG(LogPhysics, Warning, TEXT("Rp3dTriangle Mesh is updated."));
+		return;
+	}
+
+	Ar << Vertices;
+	Ar << Indices;
 }
