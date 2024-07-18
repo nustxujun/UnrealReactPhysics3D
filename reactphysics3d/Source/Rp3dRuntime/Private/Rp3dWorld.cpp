@@ -10,15 +10,21 @@
 
 URp3dWorld* URp3dWorld::Get(UWorld* World)
 {
-    auto RWorld = World->GetSubsystem<URp3dWorldSubsystem>()->GetRp3dWorld();
+    auto Sys = World->GetSubsystem<URp3dWorldSubsystem>();
+    URp3dWorld* RWorld = nullptr;
+    if (Sys)
+        RWorld = Sys->GetRp3dWorld();
     return RWorld;
 }
 
 
-void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings, UWorld* InWorld)
+URp3dWorld::URp3dWorld(const FObjectInitializer& ObjectInitializer):
+    Super(ObjectInitializer)
 {
-    World = InWorld;
+}
 
+void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
+{
 	using namespace reactphysics3d;
 	PhysicsWorld::WorldSettings Settings;
 
@@ -45,11 +51,11 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings, UWorld* InW
         });
 
 
-    if (WorldSettings.bAutoUpdate)
     {
-        TickHandle = FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this](auto DeltaTime){
+        TickHandle = FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this, bUpdate = WorldSettings.bAutoUpdate](auto DeltaTime){
             DrawDebug();
-            UpdatePhysics(DeltaTime);
+            if (bUpdate)
+                UpdatePhysics(DeltaTime);
             return true;
         }),0);
     }
@@ -84,8 +90,10 @@ void URp3dWorld::UpdatePhysics(reactphysics3d::decimal DeltaTime)
 
 void URp3dWorld::DrawDebug()
 {
-    if (!World.IsValid())
-        return ;
+    
+    auto World = GetWorld();
+    if (!World)
+        return;
 
     using namespace reactphysics3d;
     DebugRenderer& Renderer = PhysicsWorld->getDebugRenderer();
@@ -93,19 +101,18 @@ void URp3dWorld::DrawDebug()
 
     for (auto& Line : Renderer.getLines())
     {
-        ::DrawDebugLine(World.Get(), RP3D_TO_UE(Line.point1), RP3D_TO_UE(Line.point2), FColor(Line.color1));
+        ::DrawDebugLine(World, RP3D_TO_UE(Line.point1), RP3D_TO_UE(Line.point2), FColor(Line.color1));
     }
 
     for (auto& Face : Renderer.getTriangles())
     {
-        ::DrawDebugLine(World.Get(), RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1));
-        ::DrawDebugLine(World.Get(), RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1));
-        ::DrawDebugLine(World.Get(), RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1));
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1));
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1));
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1));
 
     }
     
 }
-
 void URp3dWorld::BeginDestroy()
 {
     Super::BeginDestroy();
@@ -128,6 +135,11 @@ void URp3dWorld::AddRigidBody(URp3dRigidBody* RigidBody)
     RigidBodies.Add(RigidBody);
 }
 
+void URp3dWorld::RemoveRigidBody(URp3dRigidBody* RigidBody)
+{
+    RigidBodies.RemoveSingleSwap(RigidBody);
+}
+
 
 URp3dWorld* URp3dWorldSubsystem::GetRp3dWorld()
 {
@@ -136,7 +148,9 @@ URp3dWorld* URp3dWorldSubsystem::GetRp3dWorld()
 
 bool URp3dWorldSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {
-    return true;
+    return false;
+    //auto Type = Cast<UWorld>(Outer)->WorldType;
+    //return Type == EWorldType::Game || Type == EWorldType::PIE;
 }
 
 void URp3dWorldSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -146,7 +160,7 @@ void URp3dWorldSubsystem::Initialize(FSubsystemCollectionBase& Collection)
     World = NewObject<URp3dWorld>(this);
     FRp3dWorldSettings Settings;
     Settings.bAutoUpdate = false;
-    World->Initialize(Settings, GetWorld());
+    World->Initialize(Settings);
 }
 
 void URp3dWorldSubsystem::Deinitialize()

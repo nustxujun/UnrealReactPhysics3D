@@ -13,10 +13,7 @@ void URp3dSphereComponent::SetSphereRadius(float InSphereRadius, bool bUpdateOve
 	UpdateBounds();
 	MarkRenderStateDirty();
 
-	if (RigidBody)
-	{
-		OnCreateRp3dState();
-	}
+	OnCreateRp3dState(nullptr);
 }
 
 void URp3dSphereComponent::UpdateCollisionShape()

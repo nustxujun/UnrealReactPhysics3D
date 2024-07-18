@@ -11,7 +11,7 @@ class RP3DRUNTIME_API URp3dShapeComponent : public URp3dRigidBodyComponent
 {
 	GENERATED_UCLASS_BODY()
 public:
-	virtual void OnCreateRp3dState() override;
+	virtual void OnCreateRp3dState(URp3dWorld* RWorld) override;
 	virtual void UpdateCollisionShape() {};
 
 

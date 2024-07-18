@@ -15,9 +15,9 @@ URp3dShapeComponent::URp3dShapeComponent(const FObjectInitializer& ObjectInitial
 
 
 
-void URp3dShapeComponent::OnCreateRp3dState()
+void URp3dShapeComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 {
-	Super::OnCreateRp3dState();
+	Super::OnCreateRp3dState(RWorld);
 
 	if (!RigidBody)
 		return;

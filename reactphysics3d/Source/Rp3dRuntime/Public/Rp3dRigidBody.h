@@ -35,6 +35,9 @@ class RP3DRUNTIME_API URp3dRigidBody: public UObject
 {
     GENERATED_UCLASS_BODY()
 public:
+    void Initialize(URp3dWorld* RWorld);
+    URp3dWorld* GetPhysicsWorld(){return PhysicsWorld;}
+    
 
 	void SetBodyType(EBodyType Type);
     void SetIsDebugEnabled(bool Enable);
@@ -62,7 +65,8 @@ public:
     virtual void BeginDestroy() override;
 private:
 	TSharedPtr<reactphysics3d::RigidBody> RigidBody;
-    
+    UPROPERTY()
+    URp3dWorld* PhysicsWorld = nullptr;
     UPROPERTY()
     TArray<URp3dCollisionShape*> CollisionShapes;
 };

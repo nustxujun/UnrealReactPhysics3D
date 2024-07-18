@@ -9,7 +9,7 @@ class UWorld;
 UCLASS()
 class RP3DRUNTIME_API URp3dWorld: public UObject
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 	friend class URp3dRigidBody;
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	reactphysics3d::PhysicsWorld& GetRp3dPhysicsWorld();
 
-	void Initialize(const FRp3dWorldSettings& Settings, UWorld* InWorld);
+	void Initialize(const FRp3dWorldSettings& Settings);
 
 	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
 	void EnableDebugDraw(bool Val);
@@ -28,9 +28,9 @@ public:
 	virtual void BeginDestroy();
 private:
 	void AddRigidBody(URp3dRigidBody* RigidBody);
+	void RemoveRigidBody(URp3dRigidBody* RigidBody);
 private:
 	TSharedPtr<reactphysics3d::PhysicsWorld> PhysicsWorld;
-	TWeakObjectPtr<UWorld> World;
 
 	UPROPERTY()
 	TArray<URp3dRigidBody*> RigidBodies;
@@ -50,6 +50,8 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 	bool ShouldCreateSubsystem(UObject* Outer) const override;
+private:
+	void CreatePhysicsWorld();
 private:
 	UPROPERTY()
 	URp3dWorld* World;

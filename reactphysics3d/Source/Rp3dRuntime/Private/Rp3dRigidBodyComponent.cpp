@@ -1,6 +1,7 @@
 #include "Rp3dRigidBodyComponent.h"
 #include "Rp3dRigidBody.h"
 #include "Rp3dUtils.h"
+#include "Rp3dWorld.h"
 
 URp3dRigidBodyComponent::URp3dRigidBodyComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -25,13 +26,29 @@ void URp3dRigidBodyComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	OnDestroyRp3dState();
 }
 
-void URp3dRigidBodyComponent::OnCreateRp3dState()
+void URp3dRigidBodyComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 {
-
+	if (!RWorld)
+	{
+		if (RigidBody)
+		{
+			RWorld = RigidBody->GetPhysicsWorld();
+		}
+		if (!RWorld)
+		{
+			RWorld = URp3dWorld::Get(GetWorld());
+		}
+	}
+	if (!RWorld)
+	{
+		SetComponentTickEnabled(false);
+		return;
+	}
+	RigidBody = NewObject<URp3dRigidBody>(this);
+	RigidBody->Initialize(RWorld);
 
 	auto Trans = GetComponentTransform();
 	Scale3D = GetComponentTransform().GetScale3D();
-	RigidBody = NewObject<URp3dRigidBody>(this);
 	RigidBody->SetTransform(UE_TO_RP3D(Trans));
 
 	EBodyType Type = EBodyType::STATIC;
@@ -66,14 +83,15 @@ void URp3dRigidBodyComponent::SetBodyType(EBodyType Type)
 
 void URp3dRigidBodyComponent::OnDestroyRp3dState()
 {
-	RigidBody->RemoveFromWorld();
+	if (RigidBody)
+		RigidBody->RemoveFromWorld();
 	RigidBody = nullptr;
 }
 
 void URp3dRigidBodyComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (RigidBody->IsActive())
+	if ( RigidBody->IsActive())
 	{
 		auto Trans = RP3D_TO_UE(RigidBody->GetTransform());
 		Trans.SetScale3D(Scale3D);

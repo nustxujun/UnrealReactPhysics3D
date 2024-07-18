@@ -21,22 +21,19 @@ void FRp3dCollider::SetBounciness(float Val)
 URp3dRigidBody::URp3dRigidBody(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+}
 
-    auto World = GetWorld();
+void URp3dRigidBody::Initialize(URp3dWorld* RWorld) 
+{
+    PhysicsWorld = RWorld;
+    auto& Rp3dWorld = PhysicsWorld->GetRp3dPhysicsWorld();
 
-    if (World)
-    {
-        auto RWorld = URp3dWorld::Get(World);
-	    auto& PhysicsWorld = RWorld->GetRp3dPhysicsWorld();
+    RigidBody = TSharedPtr<reactphysics3d::RigidBody>(Rp3dWorld.createRigidBody({UE_TO_RP3D(FTransform::Identity)}),
+    [&Rp3dWorld](auto Body) {
+            Rp3dWorld.destroyRigidBody(Body);
+    });
 
-        RigidBody = TSharedPtr<reactphysics3d::RigidBody>(PhysicsWorld.createRigidBody({UE_TO_RP3D(FTransform::Identity)}), 
-        [&PhysicsWorld](auto Body) {
-            PhysicsWorld.destroyRigidBody(Body);
-        });
-
-        RWorld->AddRigidBody(this);
-    }
-
+    RWorld->AddRigidBody(this);
 }
 
 void URp3dRigidBody::SetBodyType(EBodyType Type)
@@ -95,12 +92,15 @@ void URp3dRigidBody::SetAngularLockAxisFactor(const Rp3dVector3& Factor)
 
 void URp3dRigidBody::RemoveFromWorld()
 {
+    PhysicsWorld->RemoveRigidBody(this);
     RigidBody.Reset();
+    PhysicsWorld = nullptr;
 }
 
 void URp3dRigidBody::BeginDestroy()
 {
     Super::BeginDestroy();
+    PhysicsWorld = nullptr;
     RigidBody.Reset();
 }
 
@@ -120,7 +120,7 @@ FRp3dCollider URp3dRigidBody::AddCollisionShape(URp3dCollisionShape* Shape, cons
 
 void URp3dRigidBody::RemoveAllCollisionShapes()
 {
-    while (RigidBody->getNbColliders())
+    while (RigidBody && RigidBody->getNbColliders())
     {
         auto Co = RigidBody->getCollider(RigidBody->getNbColliders() - 1);
         RigidBody->removeCollider(Co);
