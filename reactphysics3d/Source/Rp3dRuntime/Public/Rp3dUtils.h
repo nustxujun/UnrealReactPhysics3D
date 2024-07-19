@@ -86,7 +86,7 @@ public:
 
 	inline static float ConvertToUE(reactphysics3d::decimal Val)
 	{
-		return ConvertToUE(Val);
+		return SCALE_TO_UE(Val);
 	}
 
 
