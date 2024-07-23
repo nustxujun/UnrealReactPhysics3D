@@ -27,7 +27,7 @@
 #include <reactphysics3d/constraint/Joint.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 Joint::Joint(Entity entity, PhysicsWorld& world) :mEntity(entity), mWorld(world) {
@@ -83,4 +83,5 @@ void Joint::awakeBodies() const {
     // Wake up the two bodies of the joint
     body1->setIsSleeping(false);
     body2->setIsSleeping(false);
+}
 }

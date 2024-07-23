@@ -28,10 +28,11 @@
 
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ConvexPolyhedronShape::ConvexPolyhedronShape(CollisionShapeName name, MemoryAllocator& allocator)
             : ConvexShape(name, CollisionShapeType::CONVEX_POLYHEDRON, allocator) {
 
+}
 }

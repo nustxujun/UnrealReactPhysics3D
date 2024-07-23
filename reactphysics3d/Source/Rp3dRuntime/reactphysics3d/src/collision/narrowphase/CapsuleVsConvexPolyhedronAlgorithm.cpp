@@ -34,7 +34,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Compute the narrow-phase collision detection between a capsule and a polyhedron
 // This technique is based on the "Robust Contact Creation for Physics Simulations" presentation
@@ -174,4 +174,5 @@ bool CapsuleVsConvexPolyhedronAlgorithm::testCollision(NarrowPhaseInfoBatch& nar
     }
 
     return isCollisionFound;
+}
 }

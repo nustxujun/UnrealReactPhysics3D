@@ -29,7 +29,7 @@
 #include <reactphysics3d/collision/VertexArray.h>
 #include <reactphysics3d/utils/quickhull/QuickHull.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables
 Logger* PhysicsCommon::mLogger = nullptr;
@@ -832,3 +832,4 @@ void PhysicsCommon::deleteProfiler(Profiler* profiler) {
    mMemoryManager.release(MemoryManager::AllocationType::Pool, profiler, sizeof(Profiler));
 }
 #endif
+}

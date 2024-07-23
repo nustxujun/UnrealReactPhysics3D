@@ -30,7 +30,7 @@
 #include <reactphysics3d/utils/Profiler.h>
 #include <reactphysics3d/engine/Island.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ConstraintSolverSystem::ConstraintSolverSystem(PhysicsWorld& world, Islands& islands, RigidBodyComponents& rigidBodyComponents,
@@ -110,4 +110,5 @@ void ConstraintSolverSystem::solvePositionConstraints() {
     mSolveFixedJointSystem.solvePositionConstraint();
     mSolveHingeJointSystem.solvePositionConstraint();
     mSolveSliderJointSystem.solvePositionConstraint();
+}
 }

@@ -35,7 +35,7 @@ namespace reactphysics3d {
 #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
     error("not support double percision")
 #else
-    using decimal = FixedPoint;
+    using decimal = FixedPoint64;
 #endif
 #else
 #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision

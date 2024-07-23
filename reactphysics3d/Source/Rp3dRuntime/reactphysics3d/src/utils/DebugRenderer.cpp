@@ -37,7 +37,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 #include <reactphysics3d/containers/Pair.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 DebugRenderer::DebugRenderer(MemoryAllocator& allocator)
@@ -561,4 +561,5 @@ void DebugRenderer::onContact(const CollisionCallback::CallbackData& callbackDat
             }
 		}
 	}
+}
 }

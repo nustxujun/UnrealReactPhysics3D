@@ -32,7 +32,7 @@
 #include <iostream>
 #include <vector>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 HeightField::HeightField(MemoryAllocator& allocator, HalfEdgeStructure& triangleHalfEdgeStructure)
@@ -425,4 +425,5 @@ std::string HeightField::to_string() const {
     ss << "}";
 
     return ss.str();
+}
 }

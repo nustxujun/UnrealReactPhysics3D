@@ -29,7 +29,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 JointComponents::JointComponents(MemoryAllocator& allocator)
@@ -203,4 +203,5 @@ void JointComponents::destroyComponent(uint32 index) {
     mBody1Entities[index].~Entity();
     mBody2Entities[index].~Entity();
     mJoints[index] = nullptr;
+}
 }

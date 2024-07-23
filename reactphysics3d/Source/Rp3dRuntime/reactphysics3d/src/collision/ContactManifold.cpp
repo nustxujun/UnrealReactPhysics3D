@@ -28,7 +28,7 @@
 #include <reactphysics3d/constraint/ContactPoint.h>
 #include <reactphysics3d/collision/ContactManifoldInfo.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ContactManifold::ContactManifold(Entity bodyEntity1, Entity bodyEntity2, Entity colliderEntity1, Entity colliderEntity2,
@@ -37,4 +37,5 @@ ContactManifold::ContactManifold(Entity bodyEntity1, Entity bodyEntity2, Entity 
                  colliderEntity1(colliderEntity1), colliderEntity2(colliderEntity2), nbContactPoints(nbContactPoints), frictionImpulse1(0), frictionImpulse2(0),
                  frictionTwistImpulse(0), isAlreadyInIsland(false) {
 
+}
 }

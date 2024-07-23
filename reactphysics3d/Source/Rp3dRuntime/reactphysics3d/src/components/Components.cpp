@@ -28,7 +28,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 Components::Components(MemoryAllocator& allocator, size_t componentDataSize, size_t alignmentMarginSize)
@@ -191,4 +191,5 @@ void Components::setIsEntityDisabled(Entity entity, bool isDisabled) {
 
     assert(mDisabledStartIndex <= mNbComponents);
     assert(mNbComponents == static_cast<uint32>(mMapEntityToComponentIndex.size()));
+}
 }

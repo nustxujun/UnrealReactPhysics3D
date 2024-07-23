@@ -27,7 +27,7 @@
 #include <reactphysics3d/engine/EntityManager.h>
 #include <reactphysics3d/engine/Entity.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 EntityManager::EntityManager(MemoryAllocator& allocator)
@@ -72,4 +72,5 @@ void EntityManager::destroyEntity(Entity entity) {
 
     // Add the index into the deque of free indices
     mFreeIndices.addBack(index);
+}
 }

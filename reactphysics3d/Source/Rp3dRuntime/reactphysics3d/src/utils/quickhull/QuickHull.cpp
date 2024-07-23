@@ -38,7 +38,7 @@
 #include <vector>
 
 // Namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Compute the convex hull of a set of points and return the resulting convex mesh
 bool QuickHull::computeConvexHull(const VertexArray& vertexArray, PolygonVertexArray& outPolygonVertexArray,
@@ -1086,4 +1086,5 @@ void QuickHull::extractPoints(const VertexArray& vertexArray, Array<Vector3>& ou
     else {
         assert(false);
     }
+}
 }

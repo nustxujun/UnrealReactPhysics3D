@@ -30,7 +30,7 @@
 #include <random>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 BodyComponents::BodyComponents(MemoryAllocator& allocator)
@@ -188,4 +188,5 @@ void BodyComponents::destroyComponent(uint32 index) {
     mBodies[index] = nullptr;
     mColliders[index].~Array<Entity>();
     mUserData[index] = nullptr;
+}
 }

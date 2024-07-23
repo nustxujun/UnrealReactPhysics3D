@@ -29,7 +29,7 @@
 #include <reactphysics3d/containers/Pair.h>
 #include <reactphysics3d/containers/containers_common.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 // Initialize the structure (when all vertices and faces have been added)
 void HalfEdgeStructure::computeHalfEdges() {
 
@@ -185,4 +185,5 @@ std::string HalfEdgeStructure::to_string() const {
        }
     }
     return "HalfEdgeStructure(" + faces + ",\n"  + edges + ",\n" + vertices + ")";
+}
 }

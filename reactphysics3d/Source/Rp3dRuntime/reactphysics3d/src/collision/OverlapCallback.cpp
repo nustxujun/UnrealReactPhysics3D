@@ -28,7 +28,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Contact Pair Constructor
 OverlapCallback::OverlapPair::OverlapPair(ContactPair& contactPair, PhysicsWorld& world, bool isLostOverlappingPair)
@@ -89,4 +89,5 @@ OverlapCallback::CallbackData::CallbackData(Array<ContactPair>& contactPairs, Ar
            mLostContactPairsIndices.add(i);
         }
     }
+}
 }

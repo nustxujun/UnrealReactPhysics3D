@@ -26,7 +26,7 @@
 // Libraries
 #include <reactphysics3d/collision/narrowphase/CollisionDispatch.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 CollisionDispatch::CollisionDispatch(MemoryAllocator& allocator) : mAllocator(allocator) {
@@ -223,3 +223,4 @@ NarrowPhaseAlgorithmType CollisionDispatch::selectNarrowPhaseAlgorithm(const Col
 
 
 
+}

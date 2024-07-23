@@ -28,7 +28,7 @@
 #include <reactphysics3d/mathematics/Vector2.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 decimal VoronoiSimplex::epsilon = decimal(0.0001);
 
@@ -628,4 +628,5 @@ decimal VoronoiSimplex::getMaxLengthSquareOfAPoint() const {
 
     // Return the maximum squared length
     return maxLengthSquare;
+}
 }

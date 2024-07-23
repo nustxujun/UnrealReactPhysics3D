@@ -29,7 +29,7 @@
 #include <reactphysics3d/components/RigidBodyComponents.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 FixedJoint::FixedJoint(Entity entity, PhysicsWorld& world, const FixedJointInfo& jointInfo)
@@ -97,3 +97,4 @@ std::string FixedJoint::to_string() const {
                         "}";
 }
 
+}

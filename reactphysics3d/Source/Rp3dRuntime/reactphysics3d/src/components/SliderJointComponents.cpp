@@ -30,7 +30,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 SliderJointComponents::SliderJointComponents(MemoryAllocator& allocator)
@@ -490,4 +490,5 @@ void SliderJointComponents::destroyComponent(uint32 index) {
     mR1PlusUCrossN1[index].~Vector3();
     mR1PlusUCrossN2[index].~Vector3();
     mR1PlusUCrossSliderAxis[index].~Vector3();
+}
 }

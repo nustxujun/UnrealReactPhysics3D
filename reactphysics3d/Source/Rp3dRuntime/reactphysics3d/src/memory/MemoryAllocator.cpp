@@ -27,7 +27,7 @@
 #include <reactphysics3d/memory/MemoryAllocator.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 /// Given a pointer to memory, this method returns the next aligned address
 /**
@@ -68,4 +68,5 @@ void* MemoryAllocator::alignAddress(void* pointer, uint8 alignment, ptrdiff_t& o
     assert(reinterpret_cast<uintptr_t>(alignedPointer) % alignment == 0);
 
     return alignedPointer;
+}
 }

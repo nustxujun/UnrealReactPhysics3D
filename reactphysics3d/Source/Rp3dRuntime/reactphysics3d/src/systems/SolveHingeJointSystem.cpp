@@ -28,7 +28,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 #include <reactphysics3d/body/RigidBody.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables definition
 const decimal SolveHingeJointSystem::BETA = decimal(0.2);
@@ -796,4 +796,5 @@ decimal SolveHingeJointSystem::computeCurrentHingeAngle(Entity jointEntity, cons
     return computeCorrespondingAngleNearLimits(hingeAngle,
                                                mHingeJointComponents.getLowerLimit(jointEntity),
                                                mHingeJointComponents.getUpperLimit(jointEntity));
+}
 }

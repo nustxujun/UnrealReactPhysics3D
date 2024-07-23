@@ -30,7 +30,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 CollisionCallback::ContactPoint::ContactPoint(const reactphysics3d::ContactPoint& contactPoint) : mContactPoint(contactPoint) {
@@ -130,4 +130,5 @@ CollisionCallback::ContactPair CollisionCallback::CallbackData::getContactPair(u
         // Return a lost contact pair
         return CollisionCallback::ContactPair(mLostContactPairs[mLostContactPairsIndices[index - mContactPairsIndices.size()]], mContactPoints, mWorld, true);
     }
+}
 }

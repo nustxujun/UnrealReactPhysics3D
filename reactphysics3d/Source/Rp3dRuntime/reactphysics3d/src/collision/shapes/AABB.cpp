@@ -28,11 +28,12 @@
 #include <reactphysics3d/configuration.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 using namespace std;
 
 // Constructor
 AABB::AABB(const Vector3& minCoordinates, const Vector3& maxCoordinates)
      :mMinCoordinates(minCoordinates), mMaxCoordinates(maxCoordinates) {
 
+}
 }

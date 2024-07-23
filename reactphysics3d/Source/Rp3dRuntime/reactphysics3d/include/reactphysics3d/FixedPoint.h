@@ -14,13 +14,13 @@
 
 #include "fixed64.hpp"
 
-using FixedPoint = f64::fixed64<32>;
+using FixedPoint64 = f64::fixed64<32>;
 
 
 #define rp3dAbs(x) f64::abs(x)
 #define rp3dSqrt(x) f64::sqrt(x)
 #define rp3dPow(x,y) f64::pow(x,y)
-#define rp3dCeil(x) f64::ceil(FixedPoint(x))
+#define rp3dCeil(x) f64::ceil(FixedPoint64(x))
 #define rp3dFloor(x) f64::floor(x)
 #define rp3dRound(x) f64::round(x)
 #define rp3dFmod(a,b) f64::fmod(a,b)
@@ -36,10 +36,10 @@ using FixedPoint = f64::fixed64<32>;
 
 namespace std
 {
-    constexpr inline bool isfinite(FixedPoint x) noexcept
+    constexpr inline bool isfinite(FixedPoint64 x) noexcept
     {
 #if FIXED_64_ENABLE_OVERFLOW && FIXED_64_ENABLE_SATURATING
-        using limits = std::numeric_limits<FixedPoint>;
+        using limits = std::numeric_limits<FixedPoint64>;
         return x != limits::max() && x != limits::min();
 #else
         return true;

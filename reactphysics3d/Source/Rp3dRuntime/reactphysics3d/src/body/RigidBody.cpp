@@ -31,7 +31,7 @@
 #include <reactphysics3d/utils/Profiler.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -1186,4 +1186,5 @@ void RigidBody::setIsActive(bool isActive) {
     setIsSleeping(!isActive);
 
     Body::setIsActive(isActive);
+}
 }

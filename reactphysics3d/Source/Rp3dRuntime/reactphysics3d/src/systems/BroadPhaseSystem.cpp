@@ -32,7 +32,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 BroadPhaseSystem::BroadPhaseSystem(CollisionDetectionSystem& collisionDetection, ColliderComponents& collidersComponents,
@@ -242,4 +242,5 @@ decimal BroadPhaseRaycastCallback::raycastBroadPhaseShape(int32 nodeId, const Ra
     }
 
     return hitFraction;
+}
 }

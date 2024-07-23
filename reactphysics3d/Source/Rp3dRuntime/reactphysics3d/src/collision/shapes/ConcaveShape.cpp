@@ -27,7 +27,7 @@
 #include <reactphysics3d/collision/shapes/ConcaveShape.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ConcaveShape::ConcaveShape(CollisionShapeName name, MemoryAllocator& allocator, const Vector3& scaling)
@@ -49,4 +49,5 @@ decimal ConcaveShape::getVolume() const {
 
     // Approximate the volume of the concave shape as the volume of its AABB
     return lengthX * lengthY * lengthZ;
+}
 }

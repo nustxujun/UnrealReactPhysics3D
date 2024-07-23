@@ -29,7 +29,7 @@
 #include <reactphysics3d/components/RigidBodyComponents.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables definition
 const decimal BallAndSocketJoint::BETA = decimal(0.2);
@@ -161,3 +161,4 @@ std::string BallAndSocketJoint::to_string() const {
             ", localAnchorPointBody2=" + mWorld.mBallAndSocketJointsComponents.getLocalAnchorPointBody2(mEntity).to_string() + "}";
 }
 
+}

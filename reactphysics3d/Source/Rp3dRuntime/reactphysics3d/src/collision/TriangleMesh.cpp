@@ -35,7 +35,7 @@
 #define EPSI_SQUA mEpsilon * mEpsilon
 #endif
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 TriangleMesh::TriangleMesh(MemoryAllocator& allocator)
@@ -350,4 +350,5 @@ int32 TriangleMesh::getDynamicAABBTreeNodeDataInt(int32 nodeID) const {
 // Ray casting method
 void TriangleMesh::raycast(const Ray& ray, DynamicAABBTreeRaycastCallback& callback) const {
     mDynamicAABBTree.raycast(ray, callback);
+}
 }

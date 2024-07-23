@@ -28,7 +28,7 @@
 #include <reactphysics3d/mathematics/Vector3.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ConvexShape::ConvexShape(CollisionShapeName name, CollisionShapeType type, MemoryAllocator& allocator, decimal margin)
@@ -57,4 +57,5 @@ Vector3 ConvexShape::getLocalSupportPointWithMargin(const Vector3& direction) co
     }
 
     return supportPoint;
+}
 }

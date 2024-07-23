@@ -29,7 +29,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 #include <reactphysics3d/collision/RaycastInfo.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor to initialize with an array of 3D vertices.
 /// This method creates an internal copy of the input vertices.
@@ -255,3 +255,4 @@ std::string ConvexMeshShape::to_string() const {
     return ss.str();
 }
 
+}

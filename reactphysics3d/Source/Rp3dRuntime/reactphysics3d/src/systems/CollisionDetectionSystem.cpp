@@ -45,7 +45,7 @@
 #include <iostream>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 using namespace std;
 
 // TriangleShape allocated size
@@ -1962,4 +1962,5 @@ EventListener* CollisionDetectionSystem::getWorldEventListener() {
 const AABB CollisionDetectionSystem::getWorldAABB(const Collider* collider) const {
     assert(collider->getBroadPhaseId() > -1);
     return mBroadPhaseSystem.getFatAABB(collider->getBroadPhaseId());
+}
 }

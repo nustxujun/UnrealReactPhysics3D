@@ -29,7 +29,7 @@
 #include <reactphysics3d/components/RigidBodyComponents.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 HingeJoint::HingeJoint(Entity entity, PhysicsWorld &world, const HingeJointInfo& jointInfo) : Joint(entity, world) {
@@ -318,4 +318,5 @@ std::string HingeJoint::to_string() const {
             ", maxMotorTorque=" + std::to_string(mWorld.mHingeJointsComponents.getMaxMotorTorque(mEntity)) + ", isLimitEnabled=" +
             (mWorld.mHingeJointsComponents.getIsLimitEnabled(mEntity) ? "true" : "false") + ", isMotorEnabled=" +
             (mWorld.mHingeJointsComponents.getIsMotorEnabled(mEntity) ? "true" : "false") + "}";
+}
 }

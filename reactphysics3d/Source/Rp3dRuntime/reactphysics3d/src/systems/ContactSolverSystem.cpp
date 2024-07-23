@@ -36,7 +36,7 @@
 #include <reactphysics3d/collision/ContactManifold.h>
 #include <algorithm>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 using namespace std;
 
 // Constants initialization
@@ -815,4 +815,5 @@ void ContactSolverSystem::computeFrictionVectors(const Vector3& deltaVelocity, C
     // The second friction vector is computed by the cross product of the first
     // friction vector and the contact normal
     contact.frictionVector2 = contact.normal.cross(contact.frictionVector1);
+}
 }

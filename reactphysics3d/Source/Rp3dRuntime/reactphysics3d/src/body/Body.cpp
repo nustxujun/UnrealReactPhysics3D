@@ -32,7 +32,7 @@
 #include <reactphysics3d/utils/Logger.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -514,4 +514,5 @@ void Body::setIsDebugEnabled(bool enabled) {
  */
 bool Body::isDebugEnabled() const {
     return mIsDebugEnabled;
+}
 }

@@ -27,7 +27,7 @@
 #include <reactphysics3d/constraint/ContactPoint.h>
 #include <reactphysics3d/collision/Collider.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 using namespace std;
 
 // Constructor
@@ -75,4 +75,5 @@ void ContactPoint::update(const ContactPointInfo* contactInfo) {
     mLocalPointOnShape2 = contactInfo->localPoint2;
 
     mIsObsolete = false;
+}
 }

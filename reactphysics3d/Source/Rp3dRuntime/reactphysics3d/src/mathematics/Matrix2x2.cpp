@@ -26,7 +26,7 @@
 // Libraries
 #include <reactphysics3d/mathematics/Matrix2x2.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Return the inverse matrix
 Matrix2x2 Matrix2x2::getInverse(decimal determinant) const {
@@ -40,4 +40,5 @@ Matrix2x2 Matrix2x2::getInverse(decimal determinant) const {
 
     // Return the inverse matrix
     return (invDeterminant * tempMatrix);
+}
 }

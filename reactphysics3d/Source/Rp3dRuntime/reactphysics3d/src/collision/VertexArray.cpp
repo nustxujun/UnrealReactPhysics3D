@@ -27,7 +27,7 @@
 #include <reactphysics3d/collision/VertexArray.h>
 #include <reactphysics3d/mathematics/Vector3.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /// Note that your data will not be copied into the PolygonVertexArray
@@ -74,4 +74,5 @@ Vector3 VertexArray::getVertex(uint32 vertexIndex) const {
     }
 
     return vertex;
+}
 }

@@ -27,7 +27,7 @@
 #include <reactphysics3d/mathematics/Matrix3x3.h>
 
 // Namespaces
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Return the inverse matrix
 Matrix3x3 Matrix3x3::getInverse(decimal determinant) const {
@@ -49,4 +49,5 @@ Matrix3x3 Matrix3x3::getInverse(decimal determinant) const {
 
     // Return the inverse matrix
     return (invDeterminant * tempMatrix);
+}
 }

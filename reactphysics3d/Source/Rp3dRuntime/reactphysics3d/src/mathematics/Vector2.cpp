@@ -27,7 +27,7 @@
 #include <reactphysics3d/mathematics/Vector2.h>
 
 // Namespaces
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Return the corresponding unit vector
 Vector2 Vector2::getUnit() const {
@@ -49,4 +49,5 @@ Vector2 Vector2::getOneUnitOrthogonalVector() const {
     assert(l > MACHINE_EPSILON);
 
     return Vector2(-y / l, x / l);
+}
 }

@@ -31,7 +31,7 @@
 #include <random>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 TransformComponents::TransformComponents(MemoryAllocator& allocator)
@@ -154,4 +154,5 @@ void TransformComponents::destroyComponent(uint32 index) {
 
     mBodies[index].~Entity();
     mTransforms[index].~Transform();
+}
 }

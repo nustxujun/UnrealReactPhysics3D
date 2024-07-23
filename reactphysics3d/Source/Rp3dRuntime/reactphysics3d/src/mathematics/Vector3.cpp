@@ -27,7 +27,7 @@
 #include <reactphysics3d/mathematics/Vector3.h>
 
 // Namespaces
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Return the corresponding unit vector
 Vector3 Vector3::getUnit() const {
@@ -61,4 +61,5 @@ Vector3 Vector3::getOneUnitOrthogonalVector() const {
         return Vector3(-y, x, 0.0) / rp3dSqrt(x*x + y*y);
     }
 
+}
 }

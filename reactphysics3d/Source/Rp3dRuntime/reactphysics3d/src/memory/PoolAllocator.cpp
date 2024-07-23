@@ -29,7 +29,7 @@
 #include <cstdlib>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Initialization of static variables
 bool PoolAllocator::isMapSizeToHeadIndexInitialized = false;
@@ -223,4 +223,5 @@ void PoolAllocator::release(void* pointer, size_t size) {
     MemoryUnit* releasedUnit = static_cast<MemoryUnit*>(pointer);
     releasedUnit->nextUnit = mFreeMemoryUnits[indexHeap];
     mFreeMemoryUnits[indexHeap] = releasedUnit;
+}
 }

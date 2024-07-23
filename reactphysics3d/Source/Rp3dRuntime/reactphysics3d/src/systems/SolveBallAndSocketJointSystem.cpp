@@ -29,7 +29,7 @@
 #include <reactphysics3d/body/RigidBody.h>
 #include <cmath>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables definition
 const decimal SolveBallAndSocketJointSystem::BETA = decimal(0.2);
@@ -442,4 +442,5 @@ void SolveBallAndSocketJointSystem::solvePositionConstraint() {
             q2.normalize();
         }
     }
+}
 }

@@ -30,7 +30,7 @@
 #include <reactphysics3d/engine/OverlappingPairs.h>
 #include <iostream>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // TriangleShape allocated size
 const size_t NarrowPhaseInfoBatch::mTriangleShapeAllocatedSize = std::ceil(sizeof(TriangleShape) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
@@ -82,4 +82,5 @@ void NarrowPhaseInfoBatch::clear() {
     mCachedCapacity = static_cast<uint32>(narrowPhaseInfos.capacity());
 
     narrowPhaseInfos.clear(true);
+}
 }

@@ -26,7 +26,7 @@
 // Libraries
 #include <reactphysics3d/memory/MemoryManager.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 MemoryManager::MemoryManager(MemoryAllocator* baseAllocator, size_t initAllocatedMemory) :
@@ -35,4 +35,5 @@ MemoryManager::MemoryManager(MemoryAllocator* baseAllocator, size_t initAllocate
                mPoolAllocator(mHeapAllocator),
                mSingleFrameAllocator(mHeapAllocator) {
 
+}
 }

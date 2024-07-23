@@ -30,7 +30,7 @@
 #include <reactphysics3d/collision/RaycastInfo.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -101,4 +101,5 @@ bool SphereShape::raycast(const Ray& ray, RaycastInfo& raycastInfo, Collider* co
     }
 
     return false;
+}
 }

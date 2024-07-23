@@ -26,7 +26,7 @@
 // Libraries
 #include <reactphysics3d/collision/narrowphase/NarrowPhaseInput.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 /// Constructor
 NarrowPhaseInput::NarrowPhaseInput(MemoryAllocator& allocator, OverlappingPairs& overlappingPairs)
@@ -57,4 +57,5 @@ void NarrowPhaseInput::clear() {
     mSphereVsConvexPolyhedronBatch.clear();
     mCapsuleVsConvexPolyhedronBatch.clear();
     mConvexPolyhedronVsConvexPolyhedronBatch.clear();
+}
 }

@@ -32,7 +32,7 @@
 #include <string>
 #include <reactphysics3d/memory/MemoryManager.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ProfileNode::ProfileNode(const char* name, ProfileNode* parentNode)
@@ -323,5 +323,5 @@ void Profiler::printRecursiveNodeReport(ProfileNodeIterator* iterator,
         iterator->enterParent();
     }
 }
-
+}
 #endif

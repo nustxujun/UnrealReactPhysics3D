@@ -27,7 +27,7 @@
 #include <reactphysics3d/engine/Island.h>
 #include <reactphysics3d/memory/MemoryManager.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 Island::Island(uint32 nbMaxBodies, uint32 nbMaxContactManifolds, MemoryManager& memoryManager)
@@ -44,4 +44,5 @@ Island::Island(uint32 nbMaxBodies, uint32 nbMaxContactManifolds, MemoryManager& 
 Island::~Island() {
     // This destructor is never called because memory is allocated on the
     // single frame allocator
+}
 }

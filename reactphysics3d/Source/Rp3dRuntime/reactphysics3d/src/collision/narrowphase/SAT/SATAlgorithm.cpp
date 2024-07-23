@@ -37,7 +37,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables initialization
 const decimal SATAlgorithm::SEPARATING_AXIS_RELATIVE_TOLERANCE = decimal(1.002);
@@ -1188,4 +1188,5 @@ bool SATAlgorithm::testGaussMapArcsIntersect(const Vector3& a, const Vector3& b,
     const decimal bdc = b.dot(dCrossC);
 
     return cba * dba < decimal(0.0) && adc * bdc < decimal(0.0) && cba * bdc > decimal(0.0);
+}
 }

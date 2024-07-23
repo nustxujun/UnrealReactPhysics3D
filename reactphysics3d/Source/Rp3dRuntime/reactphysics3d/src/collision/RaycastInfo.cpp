@@ -28,7 +28,7 @@
 #include <reactphysics3d/collision/RaycastInfo.h>
 #include <reactphysics3d/collision/Collider.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Ray cast test against a collider
 decimal RaycastTest::raycastAgainstShape(Collider* shape, const Ray& ray) {
@@ -46,4 +46,5 @@ decimal RaycastTest::raycastAgainstShape(Collider* shape, const Ray& ray) {
     }
 
     return ray.maxFraction;
+}
 }

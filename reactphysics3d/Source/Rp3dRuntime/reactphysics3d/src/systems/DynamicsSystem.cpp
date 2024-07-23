@@ -28,7 +28,7 @@
 #include <reactphysics3d/body/RigidBody.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 DynamicsSystem::DynamicsSystem(PhysicsWorld& world, BodyComponents& bodyComponents, RigidBodyComponents& rigidBodyComponents,
@@ -203,3 +203,4 @@ void DynamicsSystem::resetSplitVelocities() {
     }
 }
 
+}

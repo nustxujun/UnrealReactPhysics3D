@@ -30,7 +30,7 @@
 #include <cassert>
 
 // Namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Return a quaternion constructed from Euler angles (in radians)
 Quaternion Quaternion::fromEulerAngles(decimal angleX, decimal angleY, decimal angleZ) {
@@ -230,4 +230,5 @@ void Quaternion::initWithEulerAngles(decimal angleX, decimal angleY, decimal ang
 
     // Normalize the quaternion
     normalize();
+}
 }

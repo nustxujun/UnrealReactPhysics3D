@@ -32,7 +32,7 @@
 #include <reactphysics3d/collision/RaycastInfo.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -148,4 +148,5 @@ const HalfEdgeStructure::Edge& BoxShape::getHalfEdge(uint32 edgeIndex) const {
  */
 AABB BoxShape::getLocalBounds() const {
     return AABB(-mHalfExtents, mHalfExtents);
+}
 }

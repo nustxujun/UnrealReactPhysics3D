@@ -27,7 +27,7 @@
 #include <reactphysics3d/utils/DefaultLogger.h>
 #include <reactphysics3d/memory/MemoryManager.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 DefaultLogger::DefaultLogger(MemoryAllocator& allocator)
@@ -116,4 +116,5 @@ void DefaultLogger::log(Level level, const std::string& physicsWorldName, Catego
     }
 
     mMutex.unlock();
+}
 }

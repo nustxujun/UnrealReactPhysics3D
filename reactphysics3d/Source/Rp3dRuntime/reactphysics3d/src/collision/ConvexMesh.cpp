@@ -33,7 +33,7 @@
 #include <cstdlib>
 #include <vector>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 
 // Constructor
@@ -261,4 +261,5 @@ void ConvexMesh::computeVolume() {
     }
 
     mVolume = rp3dAbs(sum) / decimal(3.0);
+}
 }

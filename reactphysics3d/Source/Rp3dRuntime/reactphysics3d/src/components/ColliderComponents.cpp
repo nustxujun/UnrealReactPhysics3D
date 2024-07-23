@@ -31,7 +31,7 @@
 #include <random>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ColliderComponents::ColliderComponents(MemoryAllocator& allocator)
@@ -266,4 +266,5 @@ void ColliderComponents::destroyComponent(uint32 index) {
     mLocalToWorldTransforms[index].~Transform();
     mOverlappingPairs[index].~Array<uint64>();
     mMaterials[index].~Material();
+}
 }

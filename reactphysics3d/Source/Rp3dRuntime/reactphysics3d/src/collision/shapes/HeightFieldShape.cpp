@@ -29,7 +29,7 @@
 #include <reactphysics3d/utils/Profiler.h>
 #include <iostream>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -97,4 +97,5 @@ std::string HeightFieldShape::to_string() const {
     ss << "}";
 
     return ss.str();
+}
 }

@@ -28,7 +28,7 @@
 #include <reactphysics3d/mathematics/Matrix3x3.h>
 
 // Namespaces
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Set the transform from an OpenGL transform matrix
 void Transform::setFromOpenGL(decimal* openglMatrix) {
@@ -50,4 +50,5 @@ void Transform::getOpenGLMatrix(decimal* openglMatrix) const {
     openglMatrix[10] = matrix[2][2]; openglMatrix[11] = 0.0;
     openglMatrix[12] = mPosition.x; openglMatrix[13] = mPosition.y;
     openglMatrix[14] = mPosition.z; openglMatrix[15] = 1.0;
+}
 }

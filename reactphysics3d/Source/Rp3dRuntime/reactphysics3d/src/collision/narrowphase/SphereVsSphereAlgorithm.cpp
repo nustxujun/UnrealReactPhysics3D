@@ -29,7 +29,7 @@
 #include <reactphysics3d/collision/narrowphase/NarrowPhaseInfoBatch.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;  
+namespace reactphysics3d{  
 
 bool SphereVsSphereAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInfoBatch, uint32 batchStartIndex, uint32 batchNbItems, MemoryAllocator& /*memoryAllocator*/) {
 
@@ -110,4 +110,5 @@ bool SphereVsSphereAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInf
     }
 
     return isCollisionFound;
+}
 }

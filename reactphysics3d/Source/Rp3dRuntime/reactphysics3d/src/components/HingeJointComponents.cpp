@@ -30,7 +30,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 HingeJointComponents::HingeJointComponents(MemoryAllocator& allocator)
@@ -443,4 +443,5 @@ void HingeJointComponents::destroyComponent(uint32 index) {
     mA1[index].~Vector3();
     mB2CrossA1[index].~Vector3();
     mC2CrossA1[index].~Vector3();
+}
 }

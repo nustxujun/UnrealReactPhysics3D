@@ -29,7 +29,7 @@
 #include <reactphysics3d/containers/Stack.h>
 #include <reactphysics3d/utils/Profiler.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Initialization of static variables
 const int32 TreeNode::NULL_TREE_NODE = -1;
@@ -844,3 +844,4 @@ int DynamicAABBTree::computeHeight(int32 nodeID) {
 }
 
 #endif
+}

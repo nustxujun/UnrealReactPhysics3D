@@ -38,7 +38,7 @@
 #include <iostream>
 
 // Namespaces
-using namespace reactphysics3d;
+namespace reactphysics3d{
 using namespace std;
 
 // Static initializations
@@ -1067,3 +1067,4 @@ RigidBody* PhysicsWorld::getRigidBody(uint32 index) {
     return mRigidBodies[index];
 }
 
+}

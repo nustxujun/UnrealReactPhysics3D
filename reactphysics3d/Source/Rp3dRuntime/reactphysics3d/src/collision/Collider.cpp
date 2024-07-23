@@ -31,7 +31,7 @@
 #include <reactphysics3d/engine/PhysicsWorld.h>
 #include <reactphysics3d/engine/PhysicsCommon.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -327,3 +327,4 @@ void Collider::setProfiler(Profiler* profiler) {
 
 #endif
 
+}

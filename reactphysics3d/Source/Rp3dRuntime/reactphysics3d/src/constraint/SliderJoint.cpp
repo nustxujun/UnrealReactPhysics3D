@@ -29,7 +29,7 @@
 #include <reactphysics3d/components/RigidBodyComponents.h>
 #include <reactphysics3d/engine/PhysicsWorld.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static variables definition
 const decimal SliderJoint::BETA = decimal(0.2);
@@ -335,4 +335,5 @@ std::string SliderJoint::to_string() const {
             mWorld.mSliderJointsComponents.getInitOrientationDifferenceInv(mEntity).to_string() + ", motorSpeed=" + std::to_string(getMotorSpeed()) +
             ", maxMotorForce=" + std::to_string(getMaxMotorForce()) + ", isLimitEnabled=" +
             (mWorld.mSliderJointsComponents.getIsLimitEnabled(mEntity) ? "true" : "false") + ", isMotorEnabled=" + (mWorld.mSliderJointsComponents.getIsMotorEnabled(mEntity) ? "true" : "false") + "}";
+}
 }

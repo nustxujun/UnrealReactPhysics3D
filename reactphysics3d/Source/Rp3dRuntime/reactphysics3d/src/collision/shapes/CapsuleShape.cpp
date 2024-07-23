@@ -30,7 +30,7 @@
 #include <reactphysics3d/collision/RaycastInfo.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 /**
@@ -282,4 +282,5 @@ bool CapsuleShape::raycastWithSphereEndCap(const Vector3& point1, const Vector3&
     }
 
     return false;
+}
 }

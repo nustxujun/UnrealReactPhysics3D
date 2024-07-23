@@ -36,7 +36,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Compute a contact info if the two collision shapes collide.
 /// This method implements the Hybrid Technique for computing the penetration depth by
@@ -238,4 +238,5 @@ void GJKAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInfoBatch, uin
         assert(gjkResults.size() == batchIndex);
         gjkResults.add(GJKResult::INTERPENETRATE);
     }
+}
 }

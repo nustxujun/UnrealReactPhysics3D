@@ -28,7 +28,7 @@
 #include <reactphysics3d/mathematics/Vector3.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor without vertices normals
 /// Note that your data will not be copied into the TriangleVertexArray and
@@ -192,4 +192,5 @@ Vector3 TriangleVertexArray::getVertexNormal(uint32 vertexIndex) const {
     }
 
     return Vector3::zero();
+}
 }

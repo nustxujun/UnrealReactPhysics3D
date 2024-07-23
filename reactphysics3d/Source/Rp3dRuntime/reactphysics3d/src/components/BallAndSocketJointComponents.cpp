@@ -30,7 +30,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 BallAndSocketJointComponents::BallAndSocketJointComponents(MemoryAllocator& allocator)
@@ -296,4 +296,5 @@ void BallAndSocketJointComponents::destroyComponent(uint32 index) {
     mInverseMassMatrix[index].~Matrix3x3();
     mImpulse[index].~Vector3();
     mConeLimitACrossB[index].~Vector3();
+}
 }

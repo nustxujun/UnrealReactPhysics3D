@@ -30,7 +30,7 @@
 #include <cassert>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 FixedJointComponents::FixedJointComponents(MemoryAllocator& allocator)
@@ -273,4 +273,5 @@ void FixedJointComponents::destroyComponent(uint32 index) {
     mBiasTranslation[index].~Vector3();
     mBiasRotation[index].~Vector3();
     mInitOrientationDifferenceInv[index].~Quaternion();
+}
 }

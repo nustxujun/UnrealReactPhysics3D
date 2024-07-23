@@ -27,7 +27,7 @@
 #include <reactphysics3d/collision/PolygonVertexArray.h>
 #include <reactphysics3d/mathematics/Vector3.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 PolygonVertexArray::PolygonVertexArray() {
@@ -134,4 +134,5 @@ Vector3 PolygonVertexArray::getVertex(uint32 vertexIndex) const {
     }
 
     return vertex;
+}
 }

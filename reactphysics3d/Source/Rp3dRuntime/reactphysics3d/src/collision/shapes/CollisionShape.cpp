@@ -30,7 +30,7 @@
 #include <reactphysics3d/collision/Collider.h>
 
 // We want to use the ReactPhysics3D namespace
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 CollisionShape::CollisionShape(CollisionShapeName name, CollisionShapeType type, MemoryAllocator &allocator)
@@ -99,4 +99,5 @@ void CollisionShape::notifyColliderAboutChangedSize() {
     for (uint32 i=0; i < nbColliders; i++) {
         mColliders[i]->setHasCollisionShapeChangedSize(true);
     }
+}
 }

@@ -27,7 +27,7 @@
 #include <reactphysics3d/engine/Entity.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Static members initialization
 const uint32 Entity::ENTITY_INDEX_BITS = 24;
@@ -42,4 +42,5 @@ Entity::Entity(uint32 index, uint32 generation)
 
     assert(getIndex() == index);
     assert(getGeneration() == generation);
+}
 }

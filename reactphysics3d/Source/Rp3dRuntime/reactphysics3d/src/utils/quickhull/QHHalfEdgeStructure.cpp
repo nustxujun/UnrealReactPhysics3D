@@ -29,7 +29,7 @@
 #include <reactphysics3d/containers/Pair.h>
 #include <reactphysics3d/containers/containers_common.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Make sure capacity is an integral multiple of alignment
 const size_t QHHalfEdgeStructure::mVertexAllocatedSize = std::ceil(sizeof(Vertex) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
@@ -412,4 +412,5 @@ std::string QHHalfEdgeStructure::to_string() const {
        }
     }
     return "HalfEdgeStructure(" + faces + ",\n"  + edges + ",\n" + vertices + ")";
+}
 }

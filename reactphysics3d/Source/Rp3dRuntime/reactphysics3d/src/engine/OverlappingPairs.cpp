@@ -32,7 +32,7 @@
 #include <reactphysics3d/collision/narrowphase/CollisionDispatch.h>
 #include <reactphysics3d/memory/MemoryManager.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 OverlappingPairs::OverlappingPairs(MemoryManager& memoryManager, ColliderComponents& colliderComponents,
@@ -479,4 +479,5 @@ void OverlappingPairs::updateCollidingInPreviousFrame() {
 
         mConcavePairs[i].collidingInPreviousFrame = mConcavePairs[i].collidingInCurrentFrame;
     }
+}
 }

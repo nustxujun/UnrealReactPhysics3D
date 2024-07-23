@@ -29,7 +29,7 @@
 #include <cstdlib>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 SingleFrameAllocator::SingleFrameAllocator(MemoryAllocator& baseAllocator) : mBaseAllocator(baseAllocator),
@@ -129,4 +129,5 @@ void SingleFrameAllocator::reset() {
 
     // Reset the current offset at the beginning of the block
     mCurrentOffset = 0;
+}
 }

@@ -30,7 +30,7 @@
 #include <reactphysics3d/collision/TriangleMesh.h>
 #include <reactphysics3d/utils/Profiler.h>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 // Constructor
 ConcaveMeshShape::ConcaveMeshShape(TriangleMesh* triangleMesh, MemoryAllocator& allocator, HalfEdgeStructure& triangleHalfEdgeStructure, const Vector3& scaling)
@@ -354,3 +354,4 @@ void ConcaveMeshShape::setProfiler(Profiler* profiler) {
 }
 
 #endif
+}

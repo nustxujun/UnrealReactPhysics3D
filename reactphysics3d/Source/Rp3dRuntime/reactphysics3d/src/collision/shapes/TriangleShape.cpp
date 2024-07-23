@@ -33,7 +33,7 @@
 #include <reactphysics3d/configuration.h>
 #include <cassert>
 
-using namespace reactphysics3d;
+namespace reactphysics3d{
 
 
 // Constructor
@@ -211,4 +211,5 @@ bool TriangleShape::raycast(const Ray& ray, RaycastInfo& raycastInfo, Collider* 
     raycastInfo.worldNormal = normal;
 
     return true;
+}
 }
