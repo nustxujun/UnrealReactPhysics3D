@@ -34,6 +34,8 @@ using FixedPoint64 = f64::fixed64<32>;
 #define rp3dAtan(x) f64::atan(x)
 #define rp3dAtan2(x,y) f64::atan2(x,y)
 
+#include <string>
+
 namespace std
 {
     constexpr inline bool isfinite(FixedPoint64 x) noexcept
@@ -44,6 +46,11 @@ namespace std
 #else
         return true;
 #endif
+    }
+
+    inline std::string to_string(FixedPoint64 Val)
+    {
+        return to_string((double)Val);
     }
 }
 

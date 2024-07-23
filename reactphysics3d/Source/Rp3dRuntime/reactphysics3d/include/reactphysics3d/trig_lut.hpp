@@ -20026,6 +20026,14 @@ namespace f64
 
 	};
 
+#if !defined(_MSC_VER) && __cplusplus <= 201402L
+	//redundant declaration
+	template<unsigned int F>
+	constexpr std::array<int64_t, 10001> sin_lut<F>::lut_src;
+	template<unsigned int F>
+	constexpr std::array<int64_t, 10001> sin_lut<F>::lut_dst;
+#endif
+
 }
 
 #endif
