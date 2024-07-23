@@ -24,6 +24,7 @@ public:
 
 	void DrawDebug();
 	void UpdatePhysics(reactphysics3d::decimal DeltaTime);
+	void Step(reactphysics3d::decimal Interval);
 
 	virtual void BeginDestroy();
 private:

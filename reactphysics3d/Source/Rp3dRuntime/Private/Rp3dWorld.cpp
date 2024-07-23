@@ -88,6 +88,11 @@ void URp3dWorld::UpdatePhysics(reactphysics3d::decimal DeltaTime)
 
 }
 
+void URp3dWorld::Step(reactphysics3d::decimal Interval)
+{
+    PhysicsWorld->update(Interval);
+}
+
 void URp3dWorld::DrawDebug()
 {
     
