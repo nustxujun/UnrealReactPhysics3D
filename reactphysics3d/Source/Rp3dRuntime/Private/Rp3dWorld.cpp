@@ -6,6 +6,7 @@
 
 #include "reactphysics3d/engine/PhysicsCommon.h"
 #include "reactphysics3d/engine/PhysicsWorld.h"
+#include "reactphysics3d/utils/DebugRenderer.h"
 
 
 URp3dWorld* URp3dWorld::Get(UWorld* World)
@@ -25,22 +26,21 @@ URp3dWorld::URp3dWorld(const FObjectInitializer& ObjectInitializer):
 
 void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
 {
-	using namespace reactphysics3d;
-	PhysicsWorld::WorldSettings Settings;
+    reactphysics3d::PhysicsWorld::WorldSettings Settings;
 
     Settings.worldName = UE_TO_RP3D( WorldSettings.WorldName);
     Settings.gravity = UE_TO_RP3D(WorldSettings.Gravity);
     Settings.persistentContactDistanceThreshold = UE_TO_RP3D(WorldSettings.PersistentContactDistanceThreshold);
-    Settings.defaultFrictionCoefficient = decimal(WorldSettings.DefaultFrictionCoefficient);
-    Settings.defaultBounciness = decimal(WorldSettings.DefaultBounciness);
+    Settings.defaultFrictionCoefficient = reactphysics3d::decimal(WorldSettings.DefaultFrictionCoefficient);
+    Settings.defaultBounciness = reactphysics3d::decimal(WorldSettings.DefaultBounciness);
     Settings.restitutionVelocityThreshold = UE_TO_RP3D(WorldSettings.RestitutionVelocityThreshold);
     Settings.isSleepingEnabled = WorldSettings.bIsSleepingEnabled;
     Settings.defaultVelocitySolverNbIterations = WorldSettings.DefaultVelocitySolverNbIterations;
     Settings.defaultPositionSolverNbIterations = WorldSettings.DefaultPositionSolverNbIterations;
     Settings.defaultTimeBeforeSleep = WorldSettings.DefaultTimeBeforeSleep;
     Settings.defaultSleepLinearVelocity = UE_TO_RP3D(WorldSettings.DefaultSleepLinearVelocity);
-    Settings.defaultSleepAngularVelocity = decimal(WorldSettings.DefaultSleepAngularVelocity);
-    Settings.cosAngleSimilarContactManifold = decimal(WorldSettings.CosAngleSimilarContactManifold);
+    Settings.defaultSleepAngularVelocity = reactphysics3d::decimal(WorldSettings.DefaultSleepAngularVelocity);
+    Settings.cosAngleSimilarContactManifold = reactphysics3d::decimal(WorldSettings.CosAngleSimilarContactManifold);
 
     auto& PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon();
 
@@ -61,7 +61,7 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
     }
 
 
-    PhysicsWorld->getDebugRenderer().setIsDebugItemDisplayed(DebugRenderer::DebugItem::COLLISION_SHAPE, true);
+    PhysicsWorld->getDebugRenderer().setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
 
 }
 
