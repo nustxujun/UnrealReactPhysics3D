@@ -122,17 +122,16 @@ void URp3dWorld::BeginDestroy()
 {
     Super::BeginDestroy();
 
-    for (auto& Body : RigidBodies)
-    {
-        Body->RemoveFromWorld();
-    }
-    RigidBodies.Reset();
-
     if (TickHandle.IsValid())
         FTicker::GetCoreTicker().RemoveTicker(TickHandle);
 
-    PhysicsWorld.Reset();
+}
 
+URp3dWorld::~URp3dWorld()
+{
+
+    PhysicsWorld.Reset();
+    UE_LOG(LogCore, Display, TEXT("Physics world has been destroyed"))
 }
 
 void URp3dWorld::AddRigidBody(URp3dRigidBody* RigidBody)

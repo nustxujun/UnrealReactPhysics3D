@@ -14,6 +14,7 @@ class RP3DRUNTIME_API URp3dWorld: public UObject
 public:
 
 	static URp3dWorld* Get(UWorld* World);
+	virtual ~URp3dWorld();
 
 	reactphysics3d::PhysicsWorld& GetRp3dPhysicsWorld();
 

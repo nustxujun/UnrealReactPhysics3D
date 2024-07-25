@@ -19,7 +19,7 @@ void URp3dShapeComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 {
 	Super::OnCreateRp3dState(RWorld);
 
-	if (!RigidBody)
+	if (!RigidBody || !RigidBody->IsValid())
 		return;
 
 	UpdateCollisionShape();

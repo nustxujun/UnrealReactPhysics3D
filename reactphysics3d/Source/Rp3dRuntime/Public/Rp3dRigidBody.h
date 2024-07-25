@@ -59,8 +59,9 @@ public:
     void EnableGravity(bool Val);
 
     bool IsActive()const;
-
+    bool IsValid()const{return RigidBody.IsValid(); }
     void RemoveFromWorld();
+    
 
     virtual void BeginDestroy() override;
 private:

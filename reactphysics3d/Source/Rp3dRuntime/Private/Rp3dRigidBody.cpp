@@ -92,16 +92,18 @@ void URp3dRigidBody::SetAngularLockAxisFactor(const Rp3dVector3& Factor)
 
 void URp3dRigidBody::RemoveFromWorld()
 {
-    PhysicsWorld->RemoveRigidBody(this);
     RigidBody.Reset();
-    PhysicsWorld = nullptr;
+    if (PhysicsWorld)
+    {
+        PhysicsWorld->RemoveRigidBody(this);
+        PhysicsWorld = nullptr;
+    }
 }
 
 void URp3dRigidBody::BeginDestroy()
 {
     Super::BeginDestroy();
-    PhysicsWorld = nullptr;
-    RigidBody.Reset();
+    RemoveFromWorld();
 }
 
 bool URp3dRigidBody::IsActive()const

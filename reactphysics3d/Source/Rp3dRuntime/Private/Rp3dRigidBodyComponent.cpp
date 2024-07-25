@@ -30,7 +30,7 @@ void URp3dRigidBodyComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 {
 	if (!RWorld)
 	{
-		if (RigidBody)
+		if (RigidBody && RigidBody->IsValid())
 		{
 			RWorld = RigidBody->GetPhysicsWorld();
 		}
