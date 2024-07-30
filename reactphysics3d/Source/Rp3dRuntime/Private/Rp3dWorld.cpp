@@ -129,9 +129,7 @@ void URp3dWorld::BeginDestroy()
 
 URp3dWorld::~URp3dWorld()
 {
-
     PhysicsWorld.Reset();
-    UE_LOG(LogCore, Display, TEXT("Physics world has been destroyed"))
 }
 
 void URp3dWorld::AddRigidBody(URp3dRigidBody* RigidBody)

@@ -3,7 +3,11 @@
 #include "Rp3dUtils.h"
 #include "StaticMeshResources.h"
 
-
+#if ENGINE_MAJOR_VERSION >= 5 || ENGINE_MINOR_VERSION >= 27
+#define GET_BODYSETUP() GetBodySetup()
+#else
+#define GET_BODYSETUP() BodySetup
+#endif
 
 
 #if WITH_EDITOR
@@ -31,25 +35,25 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 
 	if (bIsConvexMesh)
 	{
-		for (auto& Box : Mesh->BodySetup->AggGeom.BoxElems)
+		for (auto& Box : Mesh->GET_BODYSETUP()->AggGeom.BoxElems)
 		{
 			auto Trans = Box.GetTransform();
 			AddCollisionShape(URp3dCollisionShape::CreateBoxShape(FVector(Box.X, Box.Y, Box.Z) / 2), Trans);
 		}
 
-		for (auto& Sphere : Mesh->BodySetup->AggGeom.SphereElems)
+		for (auto& Sphere : Mesh->GET_BODYSETUP()->AggGeom.SphereElems)
 		{
 			auto Trans = Sphere.GetTransform();
 			AddCollisionShape( URp3dCollisionShape::CreateSphereShape(Sphere.Radius), Trans );
 		}
 
-		for (auto& Capsule : Mesh->BodySetup->AggGeom.SphylElems)
+		for (auto& Capsule : Mesh->GET_BODYSETUP()->AggGeom.SphylElems)
 		{
 			auto Trans = Capsule.GetTransform();
 			AddCollisionShape(URp3dCollisionShape::CreateCapsuleShape(Capsule.Radius, Capsule.Length), FTransform(FRotator(0,0,90)) * Trans );
 		}
 
-		for (auto& Convex : Mesh->BodySetup->AggGeom.ConvexElems)
+		for (auto& Convex : Mesh->GET_BODYSETUP()->AggGeom.ConvexElems)
 		{
 			AddCollisionShape(URp3dCollisionShape::CreateConvexShape(
 				Convex,
@@ -113,7 +117,7 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 			{
 				if (!InComponent->Mesh)
 					return;
-				auto& Geoms = InComponent->Mesh->BodySetup->AggGeom;
+				auto& Geoms = InComponent->Mesh->GET_BODYSETUP()->AggGeom;
 
 				for (auto& Box : Geoms.BoxElems)
 				{
