@@ -75,7 +75,16 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 			Indices.Add(Face.v1);
 			Indices.Add(Face.v2);
 		}
+
+#if ENGINE_MAJOR_VERSION >= 5
+		Vertices.Reset();
+		for (auto& Ver : MeshData.Vertices)
+		{
+			Vertices.Add(FVector(Ver));
+		}
+#else
 		Vertices = MoveTemp(MeshData.Vertices);
+#endif
 #endif
 		check(Vertices.Num() != 0 && Indices.Num() != 0);
 		AddCollisionShape(URp3dCollisionShape::CreateConcaveShape(Vertices, Indices,GetComponentTransform().GetScale3D()), FTransform::Identity);
@@ -137,52 +146,6 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 					CapsuleTrans.Add(Cap.GetTransform());
 				}
 
-				// uint32 BaseIndex = 0;
-				// for (auto& Convex: InComponent->PhysicsConvexMeshs)
-				// {
-				// 	auto& Mesh = *Convex;
-				// 	Vertices.Reserve(Mesh.getNbVertices());
-				// 	for (uint32 i = 0; i < Mesh.getNbVertices(); ++i)
-				// 	{
-				// 		Vertices.Push(RP3D_TO_UE(Mesh.getVertex(i)));
-				// 	}
-
-				// 	struct Line
-				// 	{
-				// 		uint32 a;
-				// 		uint32 b;
-				// 	};
-
-				// 	auto GetKey = [](auto a, auto b) {
-				// 		auto Min = FMath::Min(a, b);
-				// 		auto Max = FMath::Max(a, b);
-				// 		return (uint64(a) << 32) | uint64(b);
-				// 	};
-
-				// 	TSortedMap<uint64, Line > Lines;
-				// 	Lines.Reserve(Mesh.getNbFaces() * 3);
-				// 	auto& Info = Mesh.getHalfEdgeStructure();
-				// 	for (uint32 i = 0; i < Info.getNbFaces(); i++)
-				// 	{
-				// 		auto& Face = Info.getFace(i);
-				// 		auto i1 = Face.faceVertices[0] + BaseIndex;
-				// 		auto i2 = Face.faceVertices[1] + BaseIndex;
-				// 		auto i3 = Face.faceVertices[2] + BaseIndex;
-
-
-				// 		Lines.Add(GetKey(i1, i2), { i1, i2 });
-				// 		Lines.Add(GetKey(i1, i3), { i1, i3 });
-				// 		Lines.Add(GetKey(i2, i3), { i2, i3 });
-				// 	}
-
-				// 	for (auto& L : Lines)
-				// 	{
-				// 		Indices.Add(L.Value.a);
-				// 		Indices.Add(L.Value.b);
-				// 	}
-
-				// 	BaseIndex = Vertices.Num();
-				// }
 			}
 			else
 			{
@@ -220,7 +183,15 @@ FPrimitiveSceneProxy* URp3dTriangleMeshComponent::CreateSceneProxy()
 					Indices.Add(L.Value.b);
 				}
 
-				Vertices = MeshData.Vertices;
+#if ENGINE_MAJOR_VERSION >= 5
+				Vertices.Reset();
+				for (auto& Ver : MeshData.Vertices)
+				{
+					Vertices.Add(FVector(Ver));
+				}
+#else
+				Vertices = MoveTemp(MeshData.Vertices);
+#endif
 			}
 		}
 
