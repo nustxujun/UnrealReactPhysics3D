@@ -18,7 +18,9 @@ struct RP3DRUNTIME_API FRp3dCollider
     GENERATED_BODY()
 
     bool IsValid(){return RigidBody.IsValid();};
-    void SetBounciness(float Val);
+    void SetBounciness(reactphysics3d::decimal Val);
+    void SetFriction(reactphysics3d::decimal Val);
+    void SetDensity(reactphysics3d::decimal Val);
 
     void Initialize(reactphysics3d::Collider* Co, TWeakObjectPtr<URp3dRigidBody> Rb)
     {
@@ -53,7 +55,7 @@ public:
 
 	void SetAngularLockAxisFactor(const Rp3dVector3& Factor);
 
-    FRp3dCollider AddCollisionShape(URp3dCollisionShape* Shape, const Rp3dTransform& Trans = Rp3dTransform::identity());
+    FRp3dCollider AddCollisionShape(TSharedPtr<Rp3dCollisionShape> Shape, const Rp3dTransform& Trans = Rp3dTransform::identity());
     void RemoveAllCollisionShapes();
 	void UpdateMassPropertiesFromColliders();
     void EnableGravity(bool Val);
@@ -68,6 +70,5 @@ private:
 	TSharedPtr<reactphysics3d::RigidBody> RigidBody;
     UPROPERTY()
     URp3dWorld* PhysicsWorld = nullptr;
-    UPROPERTY()
-    TArray<URp3dCollisionShape*> CollisionShapes;
+    TArray<TSharedPtr<Rp3dCollisionShape>> CollisionShapes;
 };

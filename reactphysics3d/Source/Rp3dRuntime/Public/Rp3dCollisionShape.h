@@ -1,50 +1,38 @@
 #pragma once 
 
 #include "CoreMinimal.h"
-#include "Rp3dCollisionShape.generated.h"
 
-UCLASS()
-class RP3DRUNTIME_API URp3dCollisionShape: public UObject
+class RP3DRUNTIME_API Rp3dCollisionShape
 {
-	GENERATED_BODY()
 public:
+	using Ptr = TSharedPtr<Rp3dCollisionShape>;
 	reactphysics3d::CollisionShape* GetRp3dShape(){return Shape.Get(); }
 
-	static URp3dCollisionShape* CreateBoxShape(const FVector& BoxExtents);
-	static URp3dCollisionShape* CreateSphereShape(float Radius);
-	static URp3dCollisionShape* CreateCapsuleShape(float Radius, float HalfHeight);
-	static URp3dCollisionShape* CreateConvexShape(const FKConvexElem& Convex, const FVector& Scale);
-	static URp3dCollisionShape* CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
-
-	virtual void BeginDestroy() override;
+	static Ptr CreateBoxShape(const FVector& BoxExtents);
+	static Ptr CreateSphereShape(float Radius);
+	static Ptr CreateCapsuleShape(float Radius, float HalfHeight);
+	static Ptr CreateConvexShape(const FKConvexElem& Convex, const FVector& Scale);
+	static Ptr CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
 
 protected:
 	TSharedPtr<reactphysics3d::CollisionShape> Shape;
 };
 
 
-UCLASS()
-class RP3DRUNTIME_API URp3dConvexShape: public URp3dCollisionShape
+class RP3DRUNTIME_API Rp3dConvexShape: public Rp3dCollisionShape
 {
-	GENERATED_BODY()
 public:
-	static URp3dConvexShape* Create(const FKConvexElem& Convex, const FVector& Scale);
-
-	virtual void BeginDestroy() override;
+	static TSharedPtr<Rp3dConvexShape> Create(const FKConvexElem& Convex, const FVector& Scale);
 
 private:
 	TSharedPtr<reactphysics3d::ConvexMesh> Mesh;
 
 };
 
-UCLASS()
-class RP3DRUNTIME_API URp3dConcaveShape: public URp3dCollisionShape
+class RP3DRUNTIME_API Rp3dConcaveShape: public Rp3dCollisionShape
 {
-	GENERATED_BODY()
 public:
-	static URp3dConcaveShape* Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
-
-	virtual void BeginDestroy() override;
+	static TSharedPtr<Rp3dConcaveShape> Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale);
 private:
 	TSharedPtr<reactphysics3d::TriangleMesh> TriangleMesh;
 };

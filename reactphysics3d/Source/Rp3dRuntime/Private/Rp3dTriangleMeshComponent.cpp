@@ -38,24 +38,24 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 		for (auto& Box : Mesh->GET_BODYSETUP()->AggGeom.BoxElems)
 		{
 			auto Trans = Box.GetTransform();
-			AddCollisionShape(URp3dCollisionShape::CreateBoxShape(FVector(Box.X, Box.Y, Box.Z) / 2), Trans);
+			AddCollisionShape(Rp3dCollisionShape::CreateBoxShape(FVector(Box.X, Box.Y, Box.Z) / 2), Trans);
 		}
 
 		for (auto& Sphere : Mesh->GET_BODYSETUP()->AggGeom.SphereElems)
 		{
 			auto Trans = Sphere.GetTransform();
-			AddCollisionShape( URp3dCollisionShape::CreateSphereShape(Sphere.Radius), Trans );
+			AddCollisionShape( Rp3dCollisionShape::CreateSphereShape(Sphere.Radius), Trans );
 		}
 
 		for (auto& Capsule : Mesh->GET_BODYSETUP()->AggGeom.SphylElems)
 		{
 			auto Trans = Capsule.GetTransform();
-			AddCollisionShape(URp3dCollisionShape::CreateCapsuleShape(Capsule.Radius, Capsule.Length), FTransform(FRotator(0,0,90)) * Trans );
+			AddCollisionShape(Rp3dCollisionShape::CreateCapsuleShape(Capsule.Radius, Capsule.Length), FTransform(FRotator(0,0,90)) * Trans );
 		}
 
 		for (auto& Convex : Mesh->GET_BODYSETUP()->AggGeom.ConvexElems)
 		{
-			AddCollisionShape(URp3dCollisionShape::CreateConvexShape(
+			AddCollisionShape(Rp3dCollisionShape::CreateConvexShape(
 				Convex,
 				GetComponentTransform().GetScale3D()),
 				Convex.GetTransform());
@@ -87,7 +87,7 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 #endif
 #endif
 		check(Vertices.Num() != 0 && Indices.Num() != 0);
-		AddCollisionShape(URp3dCollisionShape::CreateConcaveShape(Vertices, Indices,GetComponentTransform().GetScale3D()), FTransform::Identity);
+		AddCollisionShape(Rp3dCollisionShape::CreateConcaveShape(Vertices, Indices,GetComponentTransform().GetScale3D()), FTransform::Identity);
 	}
 
 

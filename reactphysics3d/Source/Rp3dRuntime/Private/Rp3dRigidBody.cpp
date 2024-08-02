@@ -10,13 +10,26 @@
 
 
 
-void FRp3dCollider::SetBounciness(float Val)
+void FRp3dCollider::SetBounciness(reactphysics3d::decimal Val)
 {
     if (!IsValid())
         return;
     Collider->getMaterial().setBounciness(Val);
 }
 
+void FRp3dCollider::SetFriction(reactphysics3d::decimal Val)
+{
+    if (!IsValid())
+        return;
+    Collider->getMaterial().setFrictionCoefficient(Val);
+}
+
+void FRp3dCollider::SetDensity(reactphysics3d::decimal Val)
+{
+    if (!IsValid())
+        return;
+    Collider->getMaterial().setMassDensity(Val);
+}
 
 URp3dRigidBody::URp3dRigidBody(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -98,6 +111,7 @@ void URp3dRigidBody::RemoveFromWorld()
         PhysicsWorld->RemoveRigidBody(this);
         PhysicsWorld = nullptr;
     }
+    CollisionShapes.Reset();
 }
 
 void URp3dRigidBody::BeginDestroy()
@@ -111,7 +125,7 @@ bool URp3dRigidBody::IsActive()const
     return RigidBody->isActive();
 }
 
-FRp3dCollider URp3dRigidBody::AddCollisionShape(URp3dCollisionShape* Shape, const Rp3dTransform& Trans)
+FRp3dCollider URp3dRigidBody::AddCollisionShape(Rp3dCollisionShape::Ptr Shape, const Rp3dTransform& Trans)
 {
     auto Collider = RigidBody->addCollider(Shape->GetRp3dShape(), Trans);
     CollisionShapes.Add(Shape);

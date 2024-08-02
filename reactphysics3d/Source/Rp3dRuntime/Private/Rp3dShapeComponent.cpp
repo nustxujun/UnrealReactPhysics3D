@@ -33,7 +33,7 @@ void URp3dShapeComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 	RigidBody->UpdateMassPropertiesFromColliders();
 }
 
-void URp3dShapeComponent::AddCollisionShape(URp3dCollisionShape* Shape, const FTransform& Transform)
+void URp3dShapeComponent::AddCollisionShape(Rp3dCollisionShape::Ptr Shape, const FTransform& Transform)
 {
 	CollisionShapes.Add(Shape);
 	ShapeTransforms.Add(Transform);
@@ -41,11 +41,16 @@ void URp3dShapeComponent::AddCollisionShape(URp3dCollisionShape* Shape, const FT
 
 void URp3dShapeComponent::ClearShapes()
 {
+	if (RigidBody)
+		RigidBody->RemoveAllCollisionShapes();
 	Colliders.Reset();
 	CollisionShapes.Reset();
-	if (!RigidBody)
-		return;
-	RigidBody->RemoveAllCollisionShapes();
+}
+
+void URp3dShapeComponent::BeginDestroy()
+{
+	Super::BeginDestroy();
+	ClearShapes();
 }
 
 void URp3dShapeComponent::SetBounciness(float Val)

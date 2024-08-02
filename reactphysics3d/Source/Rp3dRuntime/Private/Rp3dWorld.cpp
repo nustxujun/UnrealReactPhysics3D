@@ -42,12 +42,12 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
     Settings.defaultSleepAngularVelocity = reactphysics3d::decimal(WorldSettings.DefaultSleepAngularVelocity);
     Settings.cosAngleSimilarContactManifold = reactphysics3d::decimal(WorldSettings.CosAngleSimilarContactManifold);
 
-    auto& PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon();
+    auto PhysicsCommon = URp3dSystem::Get().PhysicsCommon;
 
     PhysicsWorld = TSharedPtr<reactphysics3d::PhysicsWorld>(
-        PhysicsCommon.createPhysicsWorld(Settings), 
-        [&](auto World){
-            PhysicsCommon.destroyPhysicsWorld(World);
+        PhysicsCommon->createPhysicsWorld(Settings), 
+        [=](auto World){
+            PhysicsCommon->destroyPhysicsWorld(World);
         });
 
 
@@ -111,9 +111,9 @@ void URp3dWorld::DrawDebug()
 
     for (auto& Face : Renderer.getTriangles())
     {
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1));
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1));
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1));
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1),false,0.0f);
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
 
     }
     

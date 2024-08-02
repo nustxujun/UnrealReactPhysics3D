@@ -99,6 +99,6 @@ void URp3dBoxComponent::UpdateCollisionShape()
 {
 	auto Extent = BoxExtent * GetComponentTransform().GetScale3D();
 	ClearShapes();
-	AddCollisionShape(URp3dCollisionShape::CreateBoxShape(Extent), FTransform::Identity);
+	AddCollisionShape(Rp3dCollisionShape::CreateBoxShape(Extent), FTransform::Identity);
 }
 

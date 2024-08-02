@@ -14,7 +14,7 @@ UCLASS()
 class RP3DRUNTIME_API URp3dSystem : public UEngineSubsystem
 {
 	GENERATED_BODY()
-
+	friend class URp3dWorld;
 public:
 	static URp3dSystem& Get();
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
@@ -23,13 +23,7 @@ public:
 
 	reactphysics3d::PhysicsCommon& GetRp3dPhysicsCommon();
 
-
 private:
 	TSharedPtr<reactphysics3d::PhysicsCommon> PhysicsCommon;
 
-	UPROPERTY()
-	FRp3dWorldSettings WorldSettings;
-
-	
-	TMap<UWorld*, URp3dWorld*> WorldMap;
 };

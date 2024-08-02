@@ -19,7 +19,7 @@ void URp3dSphereComponent::SetSphereRadius(float InSphereRadius, bool bUpdateOve
 void URp3dSphereComponent::UpdateCollisionShape()
 {
 	ClearShapes();
-	AddCollisionShape(URp3dCollisionShape::CreateSphereShape(SphereRadius) , FTransform::Identity );
+	AddCollisionShape(Rp3dCollisionShape::CreateSphereShape(SphereRadius) , FTransform::Identity );
 }
 
 

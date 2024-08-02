@@ -99,6 +99,6 @@ void URp3dCapsuleComponent::UpdateCollisionShape()
 {
 	ClearShapes();
 	const FRotator Rot(0,0,90);
-	AddCollisionShape(URp3dCollisionShape::CreateCapsuleShape(CapsuleRadius, CapsuleHalfHeight), FTransform(Rot));
+	AddCollisionShape(Rp3dCollisionShape::CreateCapsuleShape(CapsuleRadius, CapsuleHalfHeight), FTransform(Rot));
 
 }

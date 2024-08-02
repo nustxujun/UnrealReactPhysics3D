@@ -17,7 +17,7 @@ namespace reactphysics3d
 
 struct FRp3dCollider;
 
-class URp3dCollisionShape;
+class Rp3dCollisionShape;
 class URp3dRigidBody;
 class URp3dWorld;
 

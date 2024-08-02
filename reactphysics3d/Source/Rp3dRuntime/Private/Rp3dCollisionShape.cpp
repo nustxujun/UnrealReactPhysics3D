@@ -12,51 +12,46 @@
 #define VERTEX_TYPE_NAME VERTEX_FLOAT_TYPE
 #endif
 
-void URp3dCollisionShape::BeginDestroy()
-{
-    Super::BeginDestroy();
-    Shape.Reset();
-}
 
 
-URp3dCollisionShape* URp3dCollisionShape::CreateBoxShape(const FVector& BoxExtents)
+Rp3dCollisionShape::Ptr Rp3dCollisionShape::CreateBoxShape(const FVector& BoxExtents)
 {
     auto Shape = RP3D_MAKE_SHARED(BoxShape, UE_TO_RP3D(BoxExtents));
-    auto CollisionShape = NewObject<URp3dCollisionShape>(&URp3dSystem::Get());
+    auto CollisionShape = MakeShared<Rp3dCollisionShape>();
     CollisionShape->Shape = Shape;
     return CollisionShape;
 }
 
-URp3dCollisionShape* URp3dCollisionShape::CreateSphereShape(float Radius)
+Rp3dCollisionShape::Ptr Rp3dCollisionShape::CreateSphereShape(float Radius)
 {
     auto Shape = RP3D_MAKE_SHARED(SphereShape, UE_TO_RP3D(Radius));
-    auto CollisionShape = NewObject<URp3dCollisionShape>(&URp3dSystem::Get());
+    auto CollisionShape = MakeShared<Rp3dCollisionShape>();
     CollisionShape->Shape = Shape;
     return CollisionShape;
 }
 
-URp3dCollisionShape* URp3dCollisionShape::CreateCapsuleShape(float Radius, float HalfHeight)
+Rp3dCollisionShape::Ptr Rp3dCollisionShape::CreateCapsuleShape(float Radius, float HalfHeight)
 {
 	auto Shape = RP3D_MAKE_SHARED(CapsuleShape, UE_TO_RP3D(Radius), UE_TO_RP3D(HalfHeight - Radius) * 2);
-    auto CollisionShape = NewObject<URp3dCollisionShape>(&URp3dSystem::Get());
+    auto CollisionShape = MakeShared<Rp3dCollisionShape>();
     CollisionShape->Shape = Shape;
     return CollisionShape;
 }
 
-URp3dCollisionShape* URp3dCollisionShape::CreateConvexShape(const FKConvexElem& Convex, const FVector& Scale)
+Rp3dCollisionShape::Ptr Rp3dCollisionShape::CreateConvexShape(const FKConvexElem& Convex, const FVector& Scale)
 {
-    return URp3dConvexShape::Create(Convex,Scale);
+    return Rp3dConvexShape::Create(Convex,Scale);
 }
 
-URp3dCollisionShape* URp3dCollisionShape::CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
+Rp3dCollisionShape::Ptr Rp3dCollisionShape::CreateConcaveShape(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
 {
-    return URp3dConcaveShape::Create(Vertices, Indices, Scale);
+    return Rp3dConcaveShape::Create(Vertices, Indices, Scale);
 }
 
-URp3dConvexShape* URp3dConvexShape::Create(const FKConvexElem& Convex, const FVector& Scale)
+TSharedPtr<Rp3dConvexShape> Rp3dConvexShape::Create(const FKConvexElem& Convex, const FVector& Scale)
 {
     using namespace reactphysics3d;
-    auto Shape = NewObject<URp3dConvexShape>(&URp3dSystem::Get());
+    auto Shape = MakeShared< Rp3dConvexShape>();
 
     TArray<Vector3> VerticesRaw;
     VerticesRaw.Reserve(Convex.VertexData.Num());
@@ -127,16 +122,11 @@ URp3dConvexShape* URp3dConvexShape::Create(const FKConvexElem& Convex, const FVe
     return Shape;
 }
 
-void URp3dConvexShape::BeginDestroy()
-{
-    Super::BeginDestroy();
-    Mesh.Reset();
-}
 
-URp3dConcaveShape* URp3dConcaveShape::Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
+TSharedPtr<Rp3dConcaveShape> Rp3dConcaveShape::Create(const TArray<FVector>& Vertices, const TArray<int32>& Indices, const FVector& Scale)
 {
     using namespace reactphysics3d;
-    auto Shape = NewObject<URp3dConcaveShape>(&URp3dSystem::Get());
+    auto Shape = MakeShared<Rp3dConcaveShape>();
 
     const auto NumFaces = Indices.Num() / 3 ;
 
@@ -176,8 +166,3 @@ URp3dConcaveShape* URp3dConcaveShape::Create(const TArray<FVector>& Vertices, co
     return Shape;
 }
 
-void URp3dConcaveShape::BeginDestroy()
-{
-    Super::BeginDestroy();
-    TriangleMesh.Reset();
-}

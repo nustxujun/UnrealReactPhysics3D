@@ -13,22 +13,21 @@ class RP3DRUNTIME_API URp3dShapeComponent : public URp3dRigidBodyComponent
 public:
 	virtual void OnCreateRp3dState(URp3dWorld* RWorld) override;
 	virtual void UpdateCollisionShape() {};
-
+	virtual void BeginDestroy()override ;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly,export, Category = "reactphysics3d")
 	float Bounciness = 0.0f;
 
 protected:
-	void AddCollisionShape(URp3dCollisionShape* Shape, const FTransform& Transform);
+	void AddCollisionShape(Rp3dCollisionShape::Ptr Shape, const FTransform& Transform);
 	void ClearShapes();
 
 public:
 	void SetBounciness(float Val);
 
 private:
-	UPROPERTY()
-	TArray<URp3dCollisionShape*> CollisionShapes;
+	TArray<Rp3dCollisionShape::Ptr> CollisionShapes;
 	TArray<FTransform> ShapeTransforms;
 	TArray<FRp3dCollider> Colliders;
 };
