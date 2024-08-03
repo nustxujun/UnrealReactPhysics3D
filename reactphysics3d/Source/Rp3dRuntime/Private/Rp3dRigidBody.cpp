@@ -103,6 +103,55 @@ void URp3dRigidBody::SetAngularLockAxisFactor(const Rp3dVector3& Factor)
 	RigidBody->setAngularLockAxisFactor(Factor);
 }
 
+
+void URp3dRigidBody::ApplyForceAtCenterOfMass(const Rp3dVector3& Force, bool bLocalSpace )
+{
+    if (bLocalSpace)
+    {
+        RigidBody->applyLocalForceAtCenterOfMass(Force);
+    }
+    else
+    {
+        RigidBody->applyWorldForceAtCenterOfMass(Force);
+    }
+}
+
+void URp3dRigidBody::ApplyForceAtPoint(const Rp3dVector3& Force, const Rp3dVector3& Point, bool bLocalForce , bool bLocalPoint )
+{
+    if (bLocalForce)
+    {
+        if (bLocalPoint)
+        {
+            RigidBody->applyLocalForceAtLocalPosition(Force, Point);
+        }
+        else
+        {
+            RigidBody->applyLocalForceAtWorldPosition(Force, Point);
+        }
+    }
+    else
+    {
+        if (bLocalPoint)
+        {
+            RigidBody->applyWorldForceAtLocalPosition(Force, Point);
+        }
+        else
+        {
+            RigidBody->applyWorldForceAtWorldPosition(Force, Point);
+        }
+    }
+}
+
+const Rp3dVector3& URp3dRigidBody::GetForce()const
+{
+    return RigidBody->getForce();
+}
+
+void URp3dRigidBody::ResetForce()
+{
+    RigidBody->resetForce();
+}
+
 void URp3dRigidBody::RemoveFromWorld()
 {
     RigidBody.Reset();

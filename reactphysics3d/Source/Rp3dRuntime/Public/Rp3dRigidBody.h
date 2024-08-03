@@ -55,6 +55,11 @@ public:
 
 	void SetAngularLockAxisFactor(const Rp3dVector3& Factor);
 
+    void ApplyForceAtCenterOfMass(const Rp3dVector3& Force, bool bLocalSpace = false);
+    void ApplyForceAtPoint(const Rp3dVector3& Force, const Rp3dVector3& Point, bool bLocalForce = false, bool bLocalPoint = false);
+    const Rp3dVector3& GetForce()const;
+    void ResetForce();
+
     FRp3dCollider AddCollisionShape(TSharedPtr<Rp3dCollisionShape> Shape, const Rp3dTransform& Trans = Rp3dTransform::identity());
     void RemoveAllCollisionShapes();
 	void UpdateMassPropertiesFromColliders();
