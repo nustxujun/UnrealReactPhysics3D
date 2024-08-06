@@ -2,6 +2,10 @@
 
 #include "CoreMinimal.h"
 
+#if ENGINE_MAJOR_VERSION >=5 
+#include "PhysicsEngine/ConvexElem.h"
+#endif
+
 class RP3DRUNTIME_API Rp3dCollisionShape
 {
 public:

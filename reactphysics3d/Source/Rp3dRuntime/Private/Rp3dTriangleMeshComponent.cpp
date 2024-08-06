@@ -5,6 +5,7 @@
 
 #if ENGINE_MAJOR_VERSION >= 5 || ENGINE_MINOR_VERSION >= 27
 #define GET_BODYSETUP() GetBodySetup()
+#include "PhysicsEngine/BodySetup.h"
 #else
 #define GET_BODYSETUP() BodySetup
 #endif

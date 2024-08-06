@@ -36,7 +36,9 @@ private:
 
 	UPROPERTY()
 	TArray<URp3dRigidBody*> RigidBodies;
-
+#if ENGINE_MAJOR_VERSION >= 5
+	FTSTicker::
+#endif
 	FDelegateHandle TickHandle;
 	reactphysics3d::decimal TotalTime = 0;
 };
