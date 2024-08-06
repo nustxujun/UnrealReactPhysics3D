@@ -81,6 +81,11 @@ Rp3dVector3 URp3dRigidBody::GetLinearVelocity()const
     return RigidBody->getLinearVelocity();
 }
 
+void URp3dRigidBody::SetLinearDamping(reactphysics3d::decimal Damping)
+{
+    RigidBody->setLinearDamping(Damping);
+}
+
 void URp3dRigidBody::SetLinearVelocity(const Rp3dVector3& Vel)
 {
     RigidBody->setLinearVelocity(Vel);
@@ -162,6 +167,12 @@ void URp3dRigidBody::RemoveFromWorld()
     }
     CollisionShapes.Reset();
 }
+
+reactphysics3d::decimal URp3dRigidBody::GetMass()const
+{
+    return RigidBody->getMass();
+}
+
 
 void URp3dRigidBody::BeginDestroy()
 {

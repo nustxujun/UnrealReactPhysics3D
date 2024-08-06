@@ -50,6 +50,8 @@ public:
     void SetLinearVelocity(const Rp3dVector3& Vel);
     Rp3dVector3 GetLinearVelocity()const;
 
+    void SetLinearDamping(reactphysics3d::decimal Damping);
+
     Rp3dVector3 GetAngularVelocity()const;
     void SetAngularVelocity(const Rp3dVector3& Vel);
 
@@ -69,6 +71,7 @@ public:
     bool IsValid()const{return RigidBody.IsValid(); }
     void RemoveFromWorld();
     
+    reactphysics3d::decimal GetMass()const;
 
     virtual void BeginDestroy() override;
 private:
