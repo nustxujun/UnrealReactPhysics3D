@@ -8,6 +8,11 @@
 #include "reactphysics3d/engine/PhysicsWorld.h"
 #include "reactphysics3d/utils/DebugRenderer.h"
 
+#if ENGINE_MAJOR_VERSION >= 5
+using UETicker = FTSTicker;
+#else
+using UETicker = FTicker;
+#endif
 
 URp3dWorld* URp3dWorld::Get(UWorld* World)
 {
