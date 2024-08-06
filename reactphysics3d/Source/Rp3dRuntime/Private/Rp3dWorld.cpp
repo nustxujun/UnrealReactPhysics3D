@@ -57,7 +57,7 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
 
 
     {
-        TickHandle = FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this, bUpdate = WorldSettings.bAutoUpdate](auto DeltaTime){
+        TickHandle = UETicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this, bUpdate = WorldSettings.bAutoUpdate](auto DeltaTime){
             DrawDebug();
             if (bUpdate)
                 UpdatePhysics(DeltaTime);
@@ -128,7 +128,7 @@ void URp3dWorld::BeginDestroy()
     Super::BeginDestroy();
 
     if (TickHandle.IsValid())
-        FTicker::GetCoreTicker().RemoveTicker(TickHandle);
+        UETicker::GetCoreTicker().RemoveTicker(TickHandle);
 
 }
 
