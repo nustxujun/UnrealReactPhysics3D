@@ -73,10 +73,8 @@ void URp3dRigidBodyComponent::OnCreateRp3dState(URp3dWorld* RWorld)
 void URp3dRigidBodyComponent::SetBodyType(EBodyType Type)
 {
 	using namespace reactphysics3d;
-	if (Type == EBodyType::STATIC)
-	{
-		SetComponentTickEnabled(false);
-	}
+
+	SetComponentTickEnabled(bTickable && Type != EBodyType::STATIC);
 
 	RigidBody->SetBodyType(Type);
 }
@@ -119,7 +117,9 @@ void URp3dRigidBodyComponent::SetVelocity(const FVector& Vel)
 {
 }
 
-void URp3dRigidBodyComponent::SetAngularLockAxisFactor(const FVector& Factor)
+
+void URp3dRigidBodyComponent::DisableTick()
 {
-	RigidBody->SetAngularLockAxisFactor({Factor.X,Factor.Y,Factor.Z});
+	PrimaryComponentTick.bCanEverTick = false;
+	SetComponentTickEnabled(false);
 }

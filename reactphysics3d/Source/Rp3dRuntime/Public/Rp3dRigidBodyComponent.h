@@ -40,10 +40,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
 	void SetVelocity(const FVector& Vel);
 
-	void SetAngularLockAxisFactor(const FVector& Factor);
+
+	URp3dRigidBody* GetRigidBody() const{return RigidBody; }
+
+	void DisableTick();
 protected:
 	UPROPERTY()
 	URp3dRigidBody* RigidBody;
+	UPROPERTY()
+	bool bTickable = true;
 
 	FVector Scale3D;
 

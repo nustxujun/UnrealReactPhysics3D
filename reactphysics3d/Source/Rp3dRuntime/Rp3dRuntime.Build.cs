@@ -9,7 +9,11 @@ public class Rp3dRuntime : ModuleRules
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
         ShadowVariableWarningLevel = WarningLevel.Off;
+#if UE_5_2_OR_LATER
+		IWYUSupport = IWYUSupport.None;
+#else
         bEnforceIWYU = false;
+#endif
 
         PublicIncludePaths.AddRange(
             new string[] {

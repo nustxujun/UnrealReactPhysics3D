@@ -45,8 +45,8 @@ void URp3dSystem::Deinitialize()
 
 
 
-reactphysics3d::PhysicsCommon& URp3dSystem::GetRp3dPhysicsCommon()
+TSharedPtr<reactphysics3d::PhysicsCommon> URp3dSystem::GetRp3dPhysicsCommon()
 {
-	return *PhysicsCommon;
+	return PhysicsCommon;
 }
 

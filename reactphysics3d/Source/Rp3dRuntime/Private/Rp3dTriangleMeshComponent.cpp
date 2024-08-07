@@ -30,8 +30,6 @@ void URp3dTriangleMeshComponent::UpdateCollisionShape()
 
 	using namespace reactphysics3d;
 
-	auto& PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon();
-
 	ClearShapes();
 
 	if (bIsConvexMesh)

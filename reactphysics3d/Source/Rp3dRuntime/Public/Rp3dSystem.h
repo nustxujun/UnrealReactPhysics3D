@@ -21,8 +21,7 @@ public:
 	virtual void Deinitialize() override;
 
 
-	reactphysics3d::PhysicsCommon& GetRp3dPhysicsCommon();
-
+	TSharedPtr<reactphysics3d::PhysicsCommon> GetRp3dPhysicsCommon();
 private:
 	TSharedPtr<reactphysics3d::PhysicsCommon> PhysicsCommon;
 

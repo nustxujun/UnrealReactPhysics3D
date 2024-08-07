@@ -110,4 +110,4 @@ public:
 	}
 };
 
-#define RP3D_MAKE_SHARED(Obj, ...) FRp3dUtils::MakeShared(URp3dSystem::Get().GetRp3dPhysicsCommon().create##Obj(__VA_ARGS__), [](auto Val){if (Val) URp3dSystem::Get().GetRp3dPhysicsCommon().destroy##Obj(Val);});
+#define RP3D_MAKE_SHARED(Obj, ...) FRp3dUtils::MakeShared(URp3dSystem::Get().GetRp3dPhysicsCommon()->create##Obj(__VA_ARGS__), [PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon()](auto Val){if (Val) PhysicsCommon->destroy##Obj(Val);});
