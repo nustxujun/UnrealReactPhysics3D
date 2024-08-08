@@ -101,7 +101,7 @@ void URp3dRigidBodyComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 void URp3dRigidBodyComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
-	if (RigidBody)
+	if (RigidBody && RigidBody->IsValid())
 	{
 		RigidBody->SetIsDebugEnabled(bEnableDebugDraw);
 	}
