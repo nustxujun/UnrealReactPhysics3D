@@ -25,7 +25,7 @@ void URp3dTriangleMeshComponent::PostEditChangeProperty(FPropertyChangedEvent& P
 
 void URp3dTriangleMeshComponent::UpdateCollisionShape()
 {
-	if (!Mesh)
+	if (!IsInGameThread() || !Mesh)
 		return;
 
 	using namespace reactphysics3d;
