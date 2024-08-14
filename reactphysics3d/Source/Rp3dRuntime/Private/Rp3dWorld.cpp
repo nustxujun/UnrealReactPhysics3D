@@ -55,13 +55,12 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
             PhysicsCommon->destroyPhysicsWorld(World);
         });
 
-
+    if (bUpdate)
     {
         TickHandle = UETicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([this, bUpdate = WorldSettings.bAutoUpdate](auto DeltaTime){
-            DrawDebug();
-            if (bUpdate)
-                UpdatePhysics(DeltaTime);
-            return true;
+           DrawDebug();
+            UpdatePhysics(DeltaTime);
+           return true;
         }),0);
     }
 
