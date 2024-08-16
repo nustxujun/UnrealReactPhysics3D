@@ -28,7 +28,7 @@ public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void OnCreateRp3dState(URp3dWorld* RWorld = nullptr);
+	virtual void OnCreateRp3dState(TSharedPtr<FRp3dPhysicsWorld> RWorld = {});
 	virtual void OnDestroyRp3dState();
 
 	void SetBodyType(EBodyType Type);
@@ -41,12 +41,11 @@ public:
 	void SetVelocity(const FVector& Vel);
 
 
-	URp3dRigidBody* GetRigidBody() const{return RigidBody; }
+	//URp3dRigidBody* GetRigidBody() const{return RigidBody; }
 
 	void DisableTick();
 protected:
-	UPROPERTY()
-	URp3dRigidBody* RigidBody;
+	TSharedPtr<FRp3dRigidBody> RigidBody;
 	UPROPERTY()
 	bool bTickable = true;
 

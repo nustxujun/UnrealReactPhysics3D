@@ -16,11 +16,12 @@ using UETicker = FTicker;
 
 URp3dWorld* URp3dWorld::Get(UWorld* World)
 {
-    auto Sys = World->GetSubsystem<URp3dWorldSubsystem>();
-    URp3dWorld* RWorld = nullptr;
-    if (Sys)
-        RWorld = Sys->GetRp3dWorld();
-    return RWorld;
+    return nullptr;
+    //auto Sys = World->GetSubsystem<URp3dWorldSubsystem>();
+    //URp3dWorld* RWorld = nullptr;
+    //if (Sys)
+    //    RWorld = Sys->GetRp3dWorld();
+    //return RWorld;
 }
 
 
@@ -32,28 +33,7 @@ URp3dWorld::URp3dWorld(const FObjectInitializer& ObjectInitializer):
 void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
 {
     reactphysics3d::PhysicsWorld::WorldSettings Settings;
-
-    Settings.worldName = UE_TO_RP3D( WorldSettings.WorldName);
-    Settings.gravity = UE_TO_RP3D(WorldSettings.Gravity);
-    Settings.persistentContactDistanceThreshold = UE_TO_RP3D(WorldSettings.PersistentContactDistanceThreshold);
-    Settings.defaultFrictionCoefficient = reactphysics3d::decimal(WorldSettings.DefaultFrictionCoefficient);
-    Settings.defaultBounciness = reactphysics3d::decimal(WorldSettings.DefaultBounciness);
-    Settings.restitutionVelocityThreshold = UE_TO_RP3D(WorldSettings.RestitutionVelocityThreshold);
-    Settings.isSleepingEnabled = WorldSettings.bIsSleepingEnabled;
-    Settings.defaultVelocitySolverNbIterations = WorldSettings.DefaultVelocitySolverNbIterations;
-    Settings.defaultPositionSolverNbIterations = WorldSettings.DefaultPositionSolverNbIterations;
-    Settings.defaultTimeBeforeSleep = WorldSettings.DefaultTimeBeforeSleep;
-    Settings.defaultSleepLinearVelocity = UE_TO_RP3D(WorldSettings.DefaultSleepLinearVelocity);
-    Settings.defaultSleepAngularVelocity = reactphysics3d::decimal(WorldSettings.DefaultSleepAngularVelocity);
-    Settings.cosAngleSimilarContactManifold = reactphysics3d::decimal(WorldSettings.CosAngleSimilarContactManifold);
-
-    auto PhysicsCommon = URp3dSystem::Get().PhysicsCommon;
-
-    PhysicsWorld = TSharedPtr<reactphysics3d::PhysicsWorld>(
-        PhysicsCommon->createPhysicsWorld(Settings), 
-        [=](auto World){
-            PhysicsCommon->destroyPhysicsWorld(World);
-        });
+    PhysicsWorld = MakeShared<FRp3dPhysicsWorld>(WorldSettings);
 
     if (WorldSettings.bAutoUpdate)
     {
@@ -65,19 +45,17 @@ void URp3dWorld::Initialize(const FRp3dWorldSettings& WorldSettings)
     }
 
 
-    PhysicsWorld->getDebugRenderer().setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
-
 }
 
 void URp3dWorld::EnableDebugDraw(bool Val)
 {
-    PhysicsWorld->setIsDebugRenderingEnabled(Val);
+    PhysicsWorld->SetIsDebugRenderingEnabled(Val);
 }
 
 
-reactphysics3d::PhysicsWorld& URp3dWorld::GetRp3dPhysicsWorld()
+TSharedPtr<FRp3dPhysicsWorld> URp3dWorld::GetRp3dPhysicsWorld()
 {
-    return *PhysicsWorld;
+    return PhysicsWorld;
 }
 
 void URp3dWorld::UpdatePhysics(reactphysics3d::decimal DeltaTime)
@@ -86,7 +64,7 @@ void URp3dWorld::UpdatePhysics(reactphysics3d::decimal DeltaTime)
     constexpr float Interval = 1.0f / 60.0f;
     while (TotalTime > Interval)
     {
-        PhysicsWorld->update(Interval);
+        PhysicsWorld->Update(Interval);
         TotalTime -= Interval;
     }
 
@@ -94,32 +72,15 @@ void URp3dWorld::UpdatePhysics(reactphysics3d::decimal DeltaTime)
 
 void URp3dWorld::Step(reactphysics3d::decimal Interval)
 {
-    PhysicsWorld->update(Interval);
+    PhysicsWorld->Update(Interval);
 }
 
 void URp3dWorld::DrawDebug()
 {
-    
     auto World = GetWorld();
     if (!World)
         return;
-
-    using namespace reactphysics3d;
-    DebugRenderer& Renderer = PhysicsWorld->getDebugRenderer();
-
-
-    for (auto& Line : Renderer.getLines())
-    {
-        ::DrawDebugLine(World, RP3D_TO_UE(Line.point1), RP3D_TO_UE(Line.point2), FColor(Line.color1));
-    }
-
-    for (auto& Face : Renderer.getTriangles())
-    {
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1),false,0.0f);
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
-        ::DrawDebugLine(World, RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
-
-    }
+    PhysicsWorld->DrawDebug(World);
     
 }
 void URp3dWorld::BeginDestroy()
@@ -147,29 +108,93 @@ void URp3dWorld::RemoveRigidBody(URp3dRigidBody* RigidBody)
 }
 
 
-URp3dWorld* URp3dWorldSubsystem::GetRp3dWorld()
+//URp3dWorld* URp3dWorldSubsystem::GetRp3dWorld()
+//{
+//    return World;
+//}
+//
+//bool URp3dWorldSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+//{
+//    return false;
+//    //auto Type = Cast<UWorld>(Outer)->WorldType;
+//    //return Type == EWorldType::Game || Type == EWorldType::PIE;
+//}
+//
+//void URp3dWorldSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+//{
+//    //Collection.InitializeDependency(URp3dSystem::StaticClass());
+//
+//    World = NewObject<URp3dWorld>(this);
+//    FRp3dWorldSettings Settings;
+//    Settings.bAutoUpdate = false;
+//    World->Initialize(Settings);
+//}
+//
+//void URp3dWorldSubsystem::Deinitialize()
+//{
+//    World = nullptr;
+//}
+
+FRp3dPhysicsWorld::FRp3dPhysicsWorld(const FRp3dWorldSettings& WorldSettings)
 {
-    return World;
+    reactphysics3d::PhysicsWorld::WorldSettings Settings;
+
+    Settings.worldName = UE_TO_RP3D(WorldSettings.WorldName);
+    Settings.gravity = UE_TO_RP3D(WorldSettings.Gravity);
+    Settings.persistentContactDistanceThreshold = UE_TO_RP3D(WorldSettings.PersistentContactDistanceThreshold);
+    Settings.defaultFrictionCoefficient = reactphysics3d::decimal(WorldSettings.DefaultFrictionCoefficient);
+    Settings.defaultBounciness = reactphysics3d::decimal(WorldSettings.DefaultBounciness);
+    Settings.restitutionVelocityThreshold = UE_TO_RP3D(WorldSettings.RestitutionVelocityThreshold);
+    Settings.isSleepingEnabled = WorldSettings.bIsSleepingEnabled;
+    Settings.defaultVelocitySolverNbIterations = WorldSettings.DefaultVelocitySolverNbIterations;
+    Settings.defaultPositionSolverNbIterations = WorldSettings.DefaultPositionSolverNbIterations;
+    Settings.defaultTimeBeforeSleep = WorldSettings.DefaultTimeBeforeSleep;
+    Settings.defaultSleepLinearVelocity = UE_TO_RP3D(WorldSettings.DefaultSleepLinearVelocity);
+    Settings.defaultSleepAngularVelocity = reactphysics3d::decimal(WorldSettings.DefaultSleepAngularVelocity);
+    Settings.cosAngleSimilarContactManifold = reactphysics3d::decimal(WorldSettings.CosAngleSimilarContactManifold);
+
+    auto PhysicsCommon = URp3dSystem::Get().GetRp3dPhysicsCommon();
+
+    PhysicsWorld = TSharedPtr<reactphysics3d::PhysicsWorld>(
+        PhysicsCommon->createPhysicsWorld(Settings),
+        [=](auto World) {
+            PhysicsCommon->destroyPhysicsWorld(World);
+        });
+
+    PhysicsWorld->getDebugRenderer().setIsDebugItemDisplayed(reactphysics3d::DebugRenderer::DebugItem::COLLISION_SHAPE, true);
 }
 
-bool URp3dWorldSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+TSharedPtr<FRp3dRigidBody> FRp3dPhysicsWorld::CreateRigidBody()
 {
-    return false;
-    //auto Type = Cast<UWorld>(Outer)->WorldType;
-    //return Type == EWorldType::Game || Type == EWorldType::PIE;
+    return MakeShared<FRp3dRigidBody>(this);
 }
 
-void URp3dWorldSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void FRp3dPhysicsWorld::SetIsDebugRenderingEnabled(bool Val)
 {
-    //Collection.InitializeDependency(URp3dSystem::StaticClass());
-
-    World = NewObject<URp3dWorld>(this);
-    FRp3dWorldSettings Settings;
-    Settings.bAutoUpdate = false;
-    World->Initialize(Settings);
+    PhysicsWorld->setIsDebugRenderingEnabled(Val);
 }
 
-void URp3dWorldSubsystem::Deinitialize()
+void FRp3dPhysicsWorld::Update(reactphysics3d::decimal DeltaTime)
 {
-    World = nullptr;
+    PhysicsWorld->update(DeltaTime);
+}
+
+void FRp3dPhysicsWorld::DrawDebug(UWorld* World)
+{
+    using namespace reactphysics3d;
+    DebugRenderer& Renderer = PhysicsWorld->getDebugRenderer();
+
+
+    for (auto& Line : Renderer.getLines())
+    {
+        ::DrawDebugLine(World, RP3D_TO_UE(Line.point1), RP3D_TO_UE(Line.point2), FColor(Line.color1));
+    }
+
+    for (auto& Face : Renderer.getTriangles())
+    {
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point2), FColor(Face.color1), false, 0.0f);
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point1), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
+        ::DrawDebugLine(World, RP3D_TO_UE(Face.point2), RP3D_TO_UE(Face.point3), FColor(Face.color1), false, 0.0f);
+
+    }
 }

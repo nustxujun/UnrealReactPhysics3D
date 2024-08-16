@@ -26,26 +26,21 @@ void URp3dRigidBodyComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	OnDestroyRp3dState();
 }
 
-void URp3dRigidBodyComponent::OnCreateRp3dState(URp3dWorld* RWorld)
+void URp3dRigidBodyComponent::OnCreateRp3dState(TSharedPtr<FRp3dPhysicsWorld> RWorld)
 {
+	
 	if (!RWorld)
 	{
-		if (RigidBody && RigidBody->IsValid())
-		{
-			RWorld = RigidBody->GetPhysicsWorld();
-		}
-		if (!RWorld)
-		{
-			RWorld = URp3dWorld::Get(GetWorld());
-		}
+		auto World = URp3dWorld::Get(GetWorld());
+		if (World)
+			RWorld = World->GetRp3dPhysicsWorld();
 	}
 	if (!RWorld)
 	{
 		SetComponentTickEnabled(false);
 		return;
 	}
-	RigidBody = NewObject<URp3dRigidBody>(this);
-	RigidBody->Initialize(RWorld);
+	RigidBody = MakeShared<FRp3dRigidBody>(RWorld.Get());
 
 	auto Trans = GetComponentTransform();
 	Scale3D = GetComponentTransform().GetScale3D();
@@ -81,9 +76,7 @@ void URp3dRigidBodyComponent::SetBodyType(EBodyType Type)
 
 void URp3dRigidBodyComponent::OnDestroyRp3dState()
 {
-	if (RigidBody)
-		RigidBody->RemoveFromWorld();
-	RigidBody = nullptr;
+	RigidBody.Reset();
 }
 
 void URp3dRigidBodyComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -101,7 +94,7 @@ void URp3dRigidBodyComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 void URp3dRigidBodyComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
-	if (RigidBody && RigidBody->IsValid())
+	if (RigidBody )
 	{
 		RigidBody->SetIsDebugEnabled(bEnableDebugDraw);
 	}

@@ -15,11 +15,11 @@ URp3dShapeComponent::URp3dShapeComponent(const FObjectInitializer& ObjectInitial
 
 
 
-void URp3dShapeComponent::OnCreateRp3dState(URp3dWorld* RWorld)
+void URp3dShapeComponent::OnCreateRp3dState(TSharedPtr<FRp3dPhysicsWorld> RWorld)
 {
 	Super::OnCreateRp3dState(RWorld);
 
-	if (!RigidBody || !RigidBody->IsValid())
+	if (!RigidBody )
 		return;
 
 	UpdateCollisionShape();

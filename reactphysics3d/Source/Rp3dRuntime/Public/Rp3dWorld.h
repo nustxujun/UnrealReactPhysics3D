@@ -4,6 +4,23 @@
 #include "Rp3dWorldSettings.h"
 #include "Rp3dWorld.generated.h"
 
+
+
+class RP3DRUNTIME_API FRp3dPhysicsWorld
+{
+	friend class FRp3dRigidBody;
+public:
+	FRp3dPhysicsWorld(const FRp3dWorldSettings& Settings);
+	TSharedPtr<FRp3dRigidBody> CreateRigidBody();
+	void SetIsDebugRenderingEnabled(bool Val);
+	void Update(reactphysics3d::decimal DeltaTime);
+
+	void DrawDebug(UWorld* World);
+
+private:
+	TSharedPtr<reactphysics3d::PhysicsWorld> PhysicsWorld;
+};
+
 class UWorld;
 
 UCLASS()
@@ -16,7 +33,7 @@ public:
 	static URp3dWorld* Get(UWorld* World);
 	virtual ~URp3dWorld();
 
-	reactphysics3d::PhysicsWorld& GetRp3dPhysicsWorld();
+	TSharedPtr<FRp3dPhysicsWorld> GetRp3dPhysicsWorld();
 
 	void Initialize(const FRp3dWorldSettings& Settings);
 
@@ -32,8 +49,7 @@ private:
 	void AddRigidBody(URp3dRigidBody* RigidBody);
 	void RemoveRigidBody(URp3dRigidBody* RigidBody);
 private:
-	TSharedPtr<reactphysics3d::PhysicsWorld> PhysicsWorld;
-
+	TSharedPtr<FRp3dPhysicsWorld> PhysicsWorld;
 	UPROPERTY()
 	TArray<URp3dRigidBody*> RigidBodies;
 #if ENGINE_MAJOR_VERSION >= 5
@@ -43,20 +59,21 @@ private:
 	reactphysics3d::decimal TotalTime = 0;
 };
 
-UCLASS()
-class RP3DRUNTIME_API URp3dWorldSubsystem : public UWorldSubsystem
-{
-	GENERATED_BODY()
-public:
-	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
-	URp3dWorld* GetRp3dWorld();
-
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	virtual void Deinitialize() override;
-	bool ShouldCreateSubsystem(UObject* Outer) const override;
-private:
-	void CreatePhysicsWorld();
-private:
-	UPROPERTY()
-	URp3dWorld* World;
-};
+//UCLASS()
+//class RP3DRUNTIME_API URp3dWorldSubsystem : public UWorldSubsystem
+//{
+//	GENERATED_BODY()
+//public:
+//	UFUNCTION(BlueprintCallable, Category = "reactphysics3d")
+//	TSharedPtr<FRp3dPhysicsWorld> GetRp3dWorld();
+//
+//	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+//	virtual void Deinitialize() override;
+//	bool ShouldCreateSubsystem(UObject* Outer) const override;
+//private:
+//	void CreatePhysicsWorld();
+//private:
+//	UPROPERTY()
+//	URp3dWorld* World;
+//
+//};
