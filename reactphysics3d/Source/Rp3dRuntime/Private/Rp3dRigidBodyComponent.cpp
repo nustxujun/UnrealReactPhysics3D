@@ -76,7 +76,7 @@ void URp3dRigidBodyComponent::SetBodyType(EBodyType Type)
 
 void URp3dRigidBodyComponent::OnDestroyRp3dState()
 {
-	RigidBody.Reset();
+	//RigidBody.Reset();
 }
 
 void URp3dRigidBodyComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
